@@ -84,13 +84,15 @@ class MeView extends StatelessWidget {
                 text: "Favourite",
                 press: null,
               ),
-              const ProfileMenu(
-                icon: Icon(
+              ProfileMenu(
+                icon: const Icon(
                   Icons.image_outlined, 
                   size: 30,
                   color: Colors.indigoAccent,),
                 text: "My Posts",
-                press: null,
+                press: (){
+                  profileController.navigateMyPostPage();
+                },
               ),
               const ProfileMenu(
                 icon: Icon(

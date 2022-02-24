@@ -42,6 +42,11 @@ class ProfileController extends GetxController{
     Get.toNamed(AppRoutes.MyProfilePage)!.then((value) => loadUser());
   }
 
+  void navigateMyPostPage(){
+
+    Get.toNamed(AppRoutes.MyPostPage);
+  }
+
   void logOut(){
 
     appData.write('isLogged', false);

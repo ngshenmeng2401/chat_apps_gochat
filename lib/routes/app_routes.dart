@@ -22,6 +22,7 @@ abstract class AppRoutes{
   static const MyProfilePage = '/myprofilepage';
   static const EditProfilePage = '/editprofilepage';
   static const EditProfilePicPage = '/editprofilepicpage';
+  static const MyPostPage = '/mypostpage';
 
   static const NotFound = '/notfound';
 }
