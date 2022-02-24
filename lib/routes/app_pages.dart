@@ -7,6 +7,8 @@ import 'package:chat_apps_gochat/pages/me/edit_profile/edit_profile_pic_view.dar
 import 'package:chat_apps_gochat/pages/me/edit_profile/my_profile_view.dart';
 import 'package:chat_apps_gochat/pages/me/me_view.dart';
 import 'package:chat_apps_gochat/pages/me/my_post/my_post_view.dart';
+import 'package:chat_apps_gochat/pages/me/my_post/post_with_pic_view.dart';
+import 'package:chat_apps_gochat/pages/me/my_post/post_without_pic_view.dart';
 import 'package:chat_apps_gochat/pages/not_found_screen.dart';
 import 'package:chat_apps_gochat/pages/signup/signup_binding.dart';
 import 'package:chat_apps_gochat/pages/signup/signup_view.dart';
@@ -83,6 +85,16 @@ class AppPages{
     GetPage(
       name: AppRoutes.MyPostPage,
       page: () => MyPostView(),
+    ),
+
+    GetPage(
+      name: AppRoutes.PostWithoutPicPage,
+      page: () => PostWithoutPictureView(),
+    ),
+
+    GetPage(
+      name: AppRoutes.PostWithPicPage,
+      page: () => PostWithPictureView(),
     ),
 
   ];

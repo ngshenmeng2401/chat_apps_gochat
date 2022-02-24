@@ -1,55 +1,221 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:chat_apps_gochat/model/post_model.dart';
 import 'package:chat_apps_gochat/pages/me/my_post/my_post_details.dart';
+import 'package:chat_apps_gochat/routes/app_pages.dart';
+import 'package:chat_apps_gochat/services/post_remote_service.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
 class MyPostController extends GetxController{
 
-  final postModel = <PostModal>[
+  final appData = GetStorage();
+  late TextEditingController contentController = TextEditingController();
+  late String email;
+  late String base64Image = "";
 
-    PostModal(
-      postId: 1,
-      email: "meng@gmail.com",
-      content: "My first movie",
-      dateTime: DateTime.now(),
-      imgStatus: "yes",
-      img: "assets/images/p1.png",
-    ),
-    PostModal(
-      postId: 2,
-      email: "meng@gmail.com",
-      content: "Weekend jogging",
-      dateTime: DateTime.now(),
-      imgStatus: "yes",
-      img: "assets/images/p1.png",
-    ),
-    PostModal(
-      postId: 3,
-      email: "meng@gmail.com",
-      content: "Haiyah, 没钱了...",
-      dateTime: DateTime.now(),
-      imgStatus: "noimage",
-      img: "assets/images/p1.png",
-    ),
-    PostModal(
-      postId: 4,
-      email: "meng@gmail.com",
-      content: "Basketball",
-      dateTime: DateTime.now(),
-      imgStatus: "yes",
-      img: "assets/images/p1.png",
-    ),
-    PostModal(
-      postId: 5,
-      email: "meng@gmail.com",
-      content: "831 831 831",
-      dateTime: DateTime.now(),
-      imgStatus: "noimage",
-      img: "assets/images/p1.png",
-    ),
-  ];
+  var selectedImagePath = ''.obs;
+  var selectedImageSize = ''.obs;
 
-  void navigatePostDetails(PostModal postModel) {
+  // Crop code
+  var cropImagePath = ''.obs;
+  var cropImageSize = ''.obs;
 
-    Get.to(() => MyPostDetailsView(postModel));
+  // Compress code
+  var compressImagePath = ''.obs;
+  var compressImageSize = ''.obs;
+
+  var postList = <Post>[].obs;
+  var isLoading = true.obs;
+  var statusMsj = "Loading".obs;
+
+  @override
+  void onInit() {
+    loadPost();
+    super.onInit();
+  }
+
+  void loadPost() async{
+
+    email = appData.read("email")??'';
+
+    try {
+      isLoading(true);
+      var post = await PostRemoteServices.fetchPost(email);
+      if (post != null) {
+        postList.assignAll(post);
+        // print(postList);
+      } else {
+        // productList = null;
+        statusMsj("No any post".tr);
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Future<void> getImage(ImageSource imageSource) async {
+
+    final pickedFile = await ImagePicker().pickImage(source: imageSource);
+
+    if (pickedFile != null){
+
+      selectedImagePath.value = pickedFile.path;
+      selectedImageSize.value = ((File(selectedImagePath.value)).lengthSync() / 1024 /1024).toStringAsFixed(2) + " MB";
+
+      final cropImageFile = await ImageCropper().cropImage(
+
+        sourcePath: selectedImagePath.value,
+        maxWidth: 512,
+        maxHeight: 512,
+        compressFormat: ImageCompressFormat.jpg,
+        aspectRatioPresets: [
+          CropAspectRatioPreset.ratio4x3,
+          CropAspectRatioPreset.ratio16x9,
+          CropAspectRatioPreset.square,
+          CropAspectRatioPreset.original
+        ]
+      );
+
+      // Crop
+      cropImagePath.value = cropImageFile!.path;
+      cropImageSize.value = ((File(cropImagePath.value)).lengthSync() / 1024 / 1024).toStringAsFixed(2) + " MB";
+
+      //Compress
+      final dir = Directory.systemTemp;
+      final targetPath = dir.absolute.path + "/temp.jpg";
+
+      var compressedFile = await FlutterImageCompress.compressAndGetFile(
+
+        cropImagePath.value,
+        targetPath,
+        quality: 90,
+      );
+
+      compressImagePath.value = compressedFile!.path;
+
+      compressImageSize.value = ((File(compressImagePath.value)).lengthSync() / 1024 / 1024).toStringAsFixed(2) + " MB";
+
+      base64Image = base64Encode(compressedFile.readAsBytesSync());
+
+    }else{
+
+      Get.snackbar("Error", "No image selected",
+        backgroundColor: Colors.white60,
+        colorText: Colors.black,
+        icon: const Icon(Icons.error, color: Colors.black),
+        snackPosition: SnackPosition.TOP,
+      );
+    }
+  }
+
+  void addPostWithPic(String base64Image){
+
+    email = appData.read("email")??'';
+    String content = contentController.text.toString();
+
+    if(base64Image.isEmpty && content.isEmpty){
+
+      Get.snackbar("Error", "Please write content and select a photo.",
+        backgroundColor: Colors.white60,
+        colorText: Colors.black,
+        icon: const Icon(Icons.error, color: Colors.black),
+        snackPosition: SnackPosition.TOP,
+      );
+
+    }else if(base64Image.isEmpty){
+
+      Get.snackbar("Error", "Please select a photo.",
+        backgroundColor: Colors.white60,
+        colorText: Colors.black,
+        icon: const Icon(Icons.error, color: Colors.black),
+        snackPosition: SnackPosition.TOP,
+      );
+
+    }else if(content.isEmpty){
+      
+      Get.snackbar("Error", "Please write content.",
+        backgroundColor: Colors.white60,
+        colorText: Colors.black,
+        icon: const Icon(Icons.error, color: Colors.black),
+        snackPosition: SnackPosition.TOP,
+      );
+
+    }else{
+
+      postList.clear();
+      PostRemoteServices.addPost(email, base64Image, content, "withPic");
+      Get.back();
+      Future.delayed(const Duration(seconds: 2), () {
+        loadPost();
+      });
+      
+    }
+  }
+
+  void addPostWithoutPic(){
+
+    email = appData.read("email")??'';
+    String content = contentController.text.toString();
+
+    if(content.isEmpty){
+      
+      Get.snackbar("Error", "Please write content.",
+        backgroundColor: Colors.white60,
+        colorText: Colors.black,
+        icon: const Icon(Icons.error, color: Colors.black),
+        snackPosition: SnackPosition.TOP,
+      );
+
+    }else{
+
+      postList.clear();
+      PostRemoteServices.addPost(email, "a", content, "withoutPic");
+      Get.back();
+      Future.delayed(const Duration(seconds: 2), () {
+        loadPost();
+      });
+      // loadPost();
+    }
+  }
+
+  void deletePostDialog(String postId, String imgStatus) {
+
+    Get.defaultDialog(
+      title: "Are you sure ?".tr,
+      content: Column(),
+      textConfirm: "Yes".tr,
+      textCancel: "No".tr,
+      onConfirm:() => {
+        Get.back(),
+        postList.clear(),
+        PostRemoteServices.deletePost(postId, imgStatus),
+        Get.back(),
+        Future.delayed(const Duration(seconds: 2), () {
+          loadPost();
+        }),
+      },
+      cancelTextColor: Colors.black,
+      confirmTextColor: Colors.white,
+      buttonColor: Colors.black,
+    );
+  }
+
+  void navigatePostWithPic(){
+    Get.toNamed(AppRoutes.PostWithPicPage)!.then((value) => loadPost());
+  }
+
+  void navigatePostWithoutPic(){
+    Get.toNamed(AppRoutes.PostWithoutPicPage)!.then((value) => loadPost());
+  }
+
+  void navigatePostDetails(Post post) {
+
+    Get.to(() => MyPostDetailsView(post));
   }
 }

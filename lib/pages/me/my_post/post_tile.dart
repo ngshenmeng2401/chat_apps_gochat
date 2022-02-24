@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 class PostTile extends StatelessWidget {
 
   final myPostController = Get.put(MyPostController());
-  final PostModal postModel;
+  final Post postModel;
   final int index;
   PostTile(this.index, this.postModel);
 
@@ -16,9 +16,9 @@ class PostTile extends StatelessWidget {
 
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    String dateYearPosted = DateFormat('yyyy').format(myPostController.postModel[index].dateTime!);
-    String dateMonthPosted = DateFormat('MMM').format(myPostController.postModel[index].dateTime!);
-    String dateDayPosted = DateFormat('dd').format(myPostController.postModel[index].dateTime!);
+    String dateYearPosted = DateFormat('yyyy').format(myPostController.postList[index].datePost!);
+    String dateMonthPosted = DateFormat('MMM').format(myPostController.postList[index].datePost!);
+    String dateDayPosted = DateFormat('dd').format(myPostController.postList[index].datePost!);
 
     return Column(
       children: [
@@ -27,8 +27,8 @@ class PostTile extends StatelessWidget {
             myPostController.navigatePostDetails(postModel);
           }),
           child: Container(
-            padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-            height: myPostController.postModel[index].imgStatus == "noimage"
+            padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+            height: myPostController.postList[index].imgStatus == "noimage"
               ? screenHeight/12
               : screenHeight/8,
             child: Row(
@@ -57,22 +57,22 @@ class PostTile extends StatelessWidget {
                   )
                 ),
                 Expanded(
-                  flex: myPostController.postModel[index].imgStatus == "noimage"
+                  flex: myPostController.postList[index].imgStatus == "noimage"
                     ? 0
                     : 3,
                   child: Container(
                     color: Colors.grey[100],
                     padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
-                    child: myPostController.postModel[index].imgStatus == "noimage"
+                    child: myPostController.postList[index].imgStatus == "noimage"
                       ? null
-                      : Image.asset("${myPostController.postModel[index].img}",
+                      : Image.network("https://javathree99.com/s271059/gochat/images/post/${myPostController.postList[index].postId}.png",
                       height: screenHeight/2,
                       width: screenWidth/1.3,
                       fit: BoxFit.fitWidth,),
                   )
                 ),
                 Expanded(
-                  flex: myPostController.postModel[index].imgStatus == "noimage"
+                  flex: myPostController.postList[index].imgStatus == "noimage"
                     ? 8
                     : 5,
                   child: Container(
@@ -81,7 +81,7 @@ class PostTile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("${myPostController.postModel[index].content}",
+                        Text("${myPostController.postList[index].content}",
                         overflow: TextOverflow.ellipsis,
                         maxLines: 4,
                           style: const TextStyle(

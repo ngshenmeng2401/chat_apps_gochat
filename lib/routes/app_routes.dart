@@ -22,7 +22,11 @@ abstract class AppRoutes{
   static const MyProfilePage = '/myprofilepage';
   static const EditProfilePage = '/editprofilepage';
   static const EditProfilePicPage = '/editprofilepicpage';
+
+  //My Post
   static const MyPostPage = '/mypostpage';
+  static const PostWithoutPicPage = '/postwithoutpicpage';
+  static const PostWithPicPage = '/postwithpicpage';
 
   static const NotFound = '/notfound';
 }
