@@ -23,7 +23,7 @@ class UserRemoteServices{
       "password" : password,
     });
     // print(response.body);
-    if (response.statusCode == 200) {
+    if (response.body == "success") {
       var resp = response.body;
       
       getSnackBar("Register Successful", "Please check your email to activate your account.");
@@ -157,7 +157,7 @@ class UserRemoteServices{
       "phoneNo" : phoneNo,
     });
     print(response.body);
-    if (response.statusCode == 200) {
+    if (response.body == "success") {
       var resp = response.body;
       
       getSnackBar("Upload Successful", "");
