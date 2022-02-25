@@ -45,7 +45,7 @@ class PostRemoteServices {
       "type" : type,
     });
     print(response.body);
-    if (response.statusCode == 200) {
+    if (response.body == "success") {
       var resp = response.body;
       
       getSnackBar("Post Successful", "");
@@ -72,7 +72,7 @@ class PostRemoteServices {
       "imgStatus" : imgStatus,
     });
     print(response.body);
-    if (response.statusCode == 200) {
+    if (response.body == "success") {
       var resp = response.body;
       
       getSnackBar("Delete Successful", "");
