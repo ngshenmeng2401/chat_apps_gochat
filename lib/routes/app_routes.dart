@@ -13,6 +13,7 @@ abstract class AppRoutes{
 
   //Contacts
   static const ContactsPage = '/contactspage';
+  static const NewFriendsPage = '/newfriendspage';
 
   //Discover
   static const DiscoverPage = '/discoverpage';

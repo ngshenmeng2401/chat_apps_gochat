@@ -1,5 +1,6 @@
 import 'package:chat_apps_gochat/pages/chats/chats_view.dart';
 import 'package:chat_apps_gochat/pages/contacts/contact_view.dart';
+import 'package:chat_apps_gochat/pages/contacts/new_friend/new_friend_view.dart';
 import 'package:chat_apps_gochat/pages/discover/discover_view.dart';
 import 'package:chat_apps_gochat/pages/login/login_binding.dart';
 import 'package:chat_apps_gochat/pages/login/login_view.dart';
@@ -58,6 +59,11 @@ class AppPages{
     GetPage(
       name: AppRoutes.ContactsPage,
       page: () => ContactsView(),
+    ),
+
+    GetPage(
+      name: AppRoutes.NewFriendsPage,
+      page: () => NewFriendView(),
     ),
 
     //Discover

@@ -17,15 +17,56 @@ class ContactsView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Contacts".tr),
+        title: Obx(() => contactsController.isSearching.value == false
+          ? Text("Contacts".tr)
+          : TextField(
+              keyboardType: TextInputType.phone,
+              controller: contactsController.searchPhoneController,
+              decoration: InputDecoration(
+                labelText: "Key in phone no...".tr,
+                labelStyle: const TextStyle(color: Colors.white70),
+              ),
+              onChanged: (value) {
+                contactsController.checkTextField();
+              },
+              style: const TextStyle(color: Colors.white),
+              cursorColor: Colors.white,
+            ),
+        ),
+        actions: [
+          Obx(() => IconButton(
+            onPressed: () {
+              contactsController.clearTextField();
+            },
+            icon: contactsController.isTyping.value == true
+                ? const Icon(Icons.clear)
+                : const Icon(
+                    Icons.clear,
+                    color: Colors.transparent,),
+          )),
+          IconButton(
+            onPressed: (){
+              contactsController.isSearchingContact(contactsController.isSearching.value);
+            },
+            icon: const Icon(Icons.search),
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const ContactMenu(
-              icon: Icon(Icons.person_add_alt_1,
+            ContactMenu(
+              icon: const Icon(Icons.person_add_alt_1,
                 size: 30,),
               text: "New Friends",
+              press: (){
+                contactsController.navigateNewFriendsPage();
+              },
+            ),
+            const ContactMenu(
+              icon: Icon(Icons.request_page,
+                size: 30,),
+              text: "New Requests",
             ),
             const ContactMenu(
               icon: Icon(Icons.people,
@@ -36,11 +77,6 @@ class ContactsView extends StatelessWidget {
               icon: Icon(Icons.local_offer_outlined,
                 size: 30,),
               text: "Tags",
-            ),
-            const ContactMenu(
-              icon: Icon(Icons.verified,
-                size: 30,),
-              text: "Official Accounts",
             ),
             const SizedBox(
               height: 20,

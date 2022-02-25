@@ -1,9 +1,9 @@
 import 'package:chat_apps_gochat/model/contacts_model.dart';
-import 'package:chat_apps_gochat/routes/app_pages.dart';
+import 'package:chat_apps_gochat/services/user_remote_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ContactsController extends GetxController{
+class NewFriendController extends GetxController{
 
   final contactsModel = <ContactsModal>[
 
@@ -19,27 +19,13 @@ class ContactsController extends GetxController{
       username: "Jia Earn",
       img: "assets/images/p3.jpg",
     ),
-    ContactsModal(
-      username: "Suan Ming",
-      img: "assets/images/p4.jpg",
-    ),
-    ContactsModal(
-      username: "Star Goh",
-      img: "assets/images/p5.jpg",
-    ),
-    ContactsModal(
-      username: "Qian Yi",
-      img: "assets/images/p1.png",
-    ),
-    ContactsModal(
-      username: "Mingger",
-      img: "assets/images/p2.jpg",
-    ),
   ];
 
   var isSearching = false.obs;
   var isTyping = false.obs;
   var searchResult = false.obs;
+  var contactList = <Contacts>[].obs;
+  var isLoading = true.obs;
   var statusMsj = "Loading".obs;
   
   late TextEditingController searchPhoneController = TextEditingController();
@@ -65,8 +51,23 @@ class ContactsController extends GetxController{
     statusMsj("Search_Product".tr);
   }
 
-  void navigateNewFriendsPage(){
+  void searchUser() async{
 
-    Get.toNamed(AppRoutes.NewFriendsPage);
+    String phoneNo = searchPhoneController.text.toString();
+
+    try {
+      isLoading(true);
+      var contact = await UserRemoteServices.searchUser(phoneNo);
+      if (contact != null) {
+        contactList.assignAll(contact);
+        // print(postList);
+      } else {
+        // productList = null;
+        statusMsj("No any post".tr);
+      }
+    } finally {
+      isLoading(false);
+    }
   }
+
 }
