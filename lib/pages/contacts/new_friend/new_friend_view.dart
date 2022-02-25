@@ -123,7 +123,7 @@ class NewFriendView extends StatelessWidget {
                       child: ListView.builder(
                       itemCount: newFriendController.contactList.length, 
                       itemBuilder: (context, index) {
-                        return NewFriendsTile(index, newFriendController.contactList[index]);
+                        return NewFriendsTile(newFriendController.contactList[index]);
                       }, )
                     );
                   }

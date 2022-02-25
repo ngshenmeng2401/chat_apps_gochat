@@ -1,26 +1,14 @@
 import 'package:chat_apps_gochat/model/contacts_model.dart';
+import 'package:chat_apps_gochat/pages/contacts/new_friend/request_view.dart';
+import 'package:chat_apps_gochat/services/chat_remote_services.dart';
 import 'package:chat_apps_gochat/services/user_remote_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class NewFriendController extends GetxController{
 
-  final contactsModel = <ContactsModal>[
-
-    ContactsModal(
-      username: "Weng Kee",
-      img: "assets/images/p1.png",
-    ),
-    ContactsModal(
-      username: "Jimmy Tan",
-      img: "assets/images/p2.jpg",
-    ),
-    ContactsModal(
-      username: "Jia Earn",
-      img: "assets/images/p3.jpg",
-    ),
-  ];
-
+  final appData = GetStorage();
   var isSearching = false.obs;
   var isTyping = false.obs;
   var searchResult = false.obs;
@@ -29,6 +17,7 @@ class NewFriendController extends GetxController{
   var statusMsj = "Loading".obs;
   
   late TextEditingController searchPhoneController = TextEditingController();
+  late TextEditingController requestController = TextEditingController()..text = "Hi, I am";
 
   @override
   void onInit() {
@@ -52,7 +41,7 @@ class NewFriendController extends GetxController{
 
     String phoneNo = searchPhoneController.text.toString();
     print(phoneNo);
-
+    contactList.clear();
     try {
       isLoading(true);
       var contact = await UserRemoteServices.searchUser(phoneNo);
@@ -93,8 +82,33 @@ class NewFriendController extends GetxController{
     statusMsj("Search User".tr);
   }
 
-  void navigateAddUserView(){
+  void sendFriendRequest(String friendEmail){
 
-    
+    String requestText = requestController.text.toString();
+    String email = appData.read("email")??'';
+
+    // print(requestText);
+    // print(email);
+    // print(friendEmail);
+
+    if(requestText.isEmpty){
+
+      Get.snackbar("Error", "Please write request text.",
+        backgroundColor: Colors.white60,
+        colorText: Colors.black,
+        icon: const Icon(Icons.error, color: Colors.black),
+        snackPosition: SnackPosition.TOP,
+      );
+
+    }else{
+
+      ChatRemoteServices.addRequest(email, friendEmail, requestText);
+
+    }
+  }
+
+  void navigateAddUserView(Contacts contacts){
+
+    Get.to(RequestView(contacts));
   }
 }

@@ -7,8 +7,7 @@ class NewFriendsTile extends StatelessWidget {
 
   final newFriendController = Get.put(NewFriendController());
   final Contacts contacts;
-  final int index;
-  NewFriendsTile(this.index, this.contacts, {Key? key}) : super(key: key);
+  NewFriendsTile(this.contacts, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +55,9 @@ class NewFriendsTile extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     color: Colors.blue,
-                    onPressed: (){},
+                    onPressed: (){
+                      newFriendController.navigateAddUserView(contacts);
+                    },
                     child: const Text("Add",
                       style: TextStyle(color: Colors.white)),
                   )
