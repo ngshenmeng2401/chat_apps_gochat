@@ -10,6 +10,10 @@ class NewFriendView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         title: Obx(() => newFriendController.isSearching.value == false
@@ -52,16 +56,79 @@ class NewFriendView extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              LimitedBox(
-                child: ListView.builder(
-                  primary: true,
-                  shrinkWrap: true,
-                  itemCount: newFriendController.contactsModel.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return NewFriendsTile(index, newFriendController.contactsModel[index]);
-                  },
-                ),
-              )
+              Obx(() => newFriendController.isTyping.value == true
+                    ? InkWell(
+                        onTap: (){
+                          newFriendController.searchUser();
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                          height: screenHeight/12,
+                          child: Row(
+                            children: [
+                              const Expanded(
+                                flex: 1,
+                                child: Icon(Icons.people)
+                              ),
+                              Expanded(
+                                flex: 6,
+                                child: Container(
+                                  padding: const EdgeInsets.fromLTRB(15, 0, 5, 0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: const [
+                                      Text("Click here to search user",
+                                        style:  TextStyle(
+                                          fontSize: 18
+                                        ),),
+                                    ],
+                                  ),
+                                )
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                      : Container()
+              ),
+              Container(
+              height: screenHeight/1.1,
+                child: Obx(() {
+                  if (newFriendController.isLoading.value) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const CircularProgressIndicator(
+                            strokeWidth: 2,
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            newFriendController.statusMsj.toString().tr,
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else if (newFriendController.contactList.isEmpty) {
+                    return Center(
+                      child: Text(
+                      newFriendController.statusMsj.toString(),
+                      style: const TextStyle(fontSize: 20),
+                    ));
+                  } else {
+                    return Container(
+                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                      child: ListView.builder(
+                      itemCount: newFriendController.contactList.length, 
+                      itemBuilder: (context, index) {
+                        return NewFriendsTile(index, newFriendController.contactList[index]);
+                      }, )
+                    );
+                  }
+                }),
+              ),
             ],
           ),
         ),

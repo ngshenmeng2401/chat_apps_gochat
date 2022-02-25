@@ -30,6 +30,48 @@ class NewFriendController extends GetxController{
   
   late TextEditingController searchPhoneController = TextEditingController();
 
+  @override
+  void onInit() {
+    loadSearchPage();
+    super.onInit();
+  }
+
+  void loadSearchPage() {
+
+    try {
+      isLoading(true);
+      if (contactList.isEmpty) {
+        statusMsj("".tr);
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Future<void> searchUser() async {
+
+    String phoneNo = searchPhoneController.text.toString();
+    print(phoneNo);
+
+    try {
+      isLoading(true);
+      var contact = await UserRemoteServices.searchUser(phoneNo);
+      if (contact != null) {
+        contactList.assignAll(contact);
+        searchResult.value = true;
+      } else {
+        // productList = null;
+        searchResult.value = false;
+        statusMsj("Not Found".tr);
+      }
+    } finally {
+      isLoading(false);
+    }
+
+    isTyping.value = false;
+    searchPhoneController.clear();
+  }
+
   void isSearchingContact(bool searching){
 
     searching == false 
@@ -48,26 +90,11 @@ class NewFriendController extends GetxController{
   void clearTextField(){
     searchPhoneController.clear();
     isTyping.value = false;
-    statusMsj("Search_Product".tr);
+    statusMsj("Search User".tr);
   }
 
-  void searchUser() async{
+  void navigateAddUserView(){
 
-    String phoneNo = searchPhoneController.text.toString();
-
-    try {
-      isLoading(true);
-      var contact = await UserRemoteServices.searchUser(phoneNo);
-      if (contact != null) {
-        contactList.assignAll(contact);
-        // print(postList);
-      } else {
-        // productList = null;
-        statusMsj("No any post".tr);
-      }
-    } finally {
-      isLoading(false);
-    }
+    
   }
-
 }

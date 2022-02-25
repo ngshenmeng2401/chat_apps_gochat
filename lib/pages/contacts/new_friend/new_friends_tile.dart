@@ -6,9 +6,9 @@ import 'package:get/get.dart';
 class NewFriendsTile extends StatelessWidget {
 
   final newFriendController = Get.put(NewFriendController());
-  final ContactsModal contactsModal;
+  final Contacts contacts;
   final int index;
-  NewFriendsTile(this.index, this.contactsModal, {Key? key}) : super(key: key);
+  NewFriendsTile(this.index, this.contacts, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +26,10 @@ class NewFriendsTile extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 1,
-                  child: Image.asset("${newFriendController.contactsModel[index].img}",
-                  height: screenHeight/2,
-                  width: screenWidth/1.3,
-                  fit: BoxFit.fitWidth,)
+                  child: contacts.imgStatus == "noimage"
+                    ? Image.asset("assets/images/p1.png",
+                        fit: BoxFit.fitWidth,)
+                    : Image.network("https://javathree99.com/s271059/gochat/images/user_profile/${contacts.phoneNo}.png")
                 ),
                 Expanded(
                   flex: 6,
@@ -39,10 +39,12 @@ class NewFriendsTile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(newFriendController.contactsModel[index].username!,
+                        Text(contacts.username!,
                           style: const TextStyle(
                             fontSize: 18
                           ),),
+                        const SizedBox(height: 5),
+                        Text(contacts.phoneNo!,),
                       ],
                     ),
                   )

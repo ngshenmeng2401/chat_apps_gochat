@@ -1,3 +1,4 @@
+import 'package:chat_apps_gochat/model/contacts_model.dart';
 import 'package:chat_apps_gochat/model/user_model.dart';
 import 'package:chat_apps_gochat/routes/app_pages.dart';
 import 'package:flutter/material.dart';
@@ -168,6 +169,30 @@ class UserRemoteServices{
       return null;
       // throw Exception("Error");
     }
+  }
+  
+  static Future<List<Contacts>?> searchUser(String phoneNo) async {
+
+    var response =
+      await client.post(
+        Uri.parse(
+          "https://javathree99.com/s271059/gochat/php/search_user.php"),
+      body: {
+        "phoneNo":phoneNo,
+      });
+      if (response.statusCode == 200) {
+        if (response.body == "nodata") {
+          return null;
+        } else {
+          var jsonString = response.body;
+          print("IN remoteservices" + jsonString);
+          return contactsFromJson(jsonString);
+        }
+      } else {
+        //show error message
+        // return null;
+        throw Exception('Failed to load Categories from API');
+      }
   }
 
   static void getSnackBar(String title, String subtitle){
