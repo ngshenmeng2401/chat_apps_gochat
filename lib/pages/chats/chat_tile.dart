@@ -59,17 +59,15 @@ class ChatTile extends StatelessWidget {
               ),
               Expanded(
                 flex: 2,
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text("${chatController.chatModel[index].time}"),
-                      Icon(chatController.chatModel[index].mute == true 
-                        ? Icons.volume_mute
-                        : null )
-                    ],
-                  ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text("${chatController.chatModel[index].time}"),
+                    Icon(chatController.chatModel[index].mute == true 
+                      ? Icons.volume_mute
+                      : null )
+                  ],
                 )
               ),
             ],
