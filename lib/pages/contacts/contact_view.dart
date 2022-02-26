@@ -63,10 +63,13 @@ class ContactsView extends StatelessWidget {
                 contactsController.navigateNewFriendsPage();
               },
             ),
-            const ContactMenu(
-              icon: Icon(Icons.request_page,
+            ContactMenu(
+              icon: const Icon(Icons.request_page,
                 size: 30,),
               text: "New Requests",
+              press: (){
+                contactsController.navigateNewRequestsPage();
+              },
             ),
             const ContactMenu(
               icon: Icon(Icons.people,

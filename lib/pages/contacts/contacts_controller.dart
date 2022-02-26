@@ -69,4 +69,9 @@ class ContactsController extends GetxController{
 
     Get.toNamed(AppRoutes.NewFriendsPage);
   }
+
+  void navigateNewRequestsPage(){
+
+    Get.toNamed(AppRoutes.NewRequestPage);
+  }
 }
