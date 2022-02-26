@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 class NewRequestTile extends StatelessWidget {
 
   final newRequestController = Get.put(NewRequestController());
-  final RequestModal requestModel;
-  NewRequestTile(this.requestModel, {Key? key}) : super(key: key);
+  final FriendRequest friendRequest;
+  NewRequestTile(this.friendRequest, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class NewRequestTile extends StatelessWidget {
       children: [
         InkWell(
           onTap: (){
-            newRequestController.navigateRequestUserDetails(requestModel);
+            newRequestController.navigateRequestUserDetails(friendRequest);
           },
           child: Container(
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -28,11 +28,13 @@ class NewRequestTile extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 1,
-                  child: 
-                  // contacts.imgStatus == "noimage" ? 
-                    Image.asset("assets/images/p1.png",
-                        fit: BoxFit.fitWidth,)
-                    // : Image.network("https://javathree99.com/s271059/gochat/images/user_profile/${contacts.phoneNo}.png")
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: friendRequest.imgStatus == "noimage" 
+                          ? Image.asset("assets/images/p1.png",
+                              fit: BoxFit.fitWidth,)
+                          : Image.network("https://javathree99.com/s271059/gochat/images/user_profile/${friendRequest.phoneNo}.png"),
+                  )
                 ),
                 Expanded(
                   flex: 6,
@@ -42,12 +44,13 @@ class NewRequestTile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(requestModel.friendEmail!,
+                        Text(friendRequest.username!,
                           style: const TextStyle(
                             fontSize: 18
                           ),),
                         const SizedBox(height: 5),
-                        Text(requestModel.requestMessage!,),
+                        Text(friendRequest.requestMessage!,
+                          overflow: TextOverflow.ellipsis,),
                       ],
                     ),
                   )
@@ -60,7 +63,7 @@ class NewRequestTile extends StatelessWidget {
                     ),
                     color: Colors.blue,
                     onPressed: (){
-                      newRequestController.acceptRequestDialog();
+                      newRequestController.acceptRequestDialog(friendRequest.email!, friendRequest.friendEmail!);
                     },
                     child: const Text("Accept",
                       style: TextStyle(color: Colors.white)),

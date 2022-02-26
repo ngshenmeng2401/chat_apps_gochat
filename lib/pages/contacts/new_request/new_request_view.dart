@@ -19,19 +19,47 @@ class NewRequestView extends StatelessWidget {
         title: Text("New Request".tr)
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: Column(
           children: [
-           LimitedBox(
-              child: ListView.builder(
-                primary: true,
-                shrinkWrap: true,
-                itemCount: newRequestController.requestModel.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return NewRequestTile(newRequestController.requestModel[index]);
-                },
-              ),
-            )
+            Container(
+              // color: Colors.amberAccent,
+              height: screenHeight/1.1,
+              child: Obx(() {
+                if (newRequestController.isLoading.value) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const CircularProgressIndicator(
+                          strokeWidth: 2,
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          newRequestController.statusMsj.toString().tr,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
+                  );
+                } else if (newRequestController.requestList.isEmpty) {
+                  return Center(
+                    child: Text(
+                    newRequestController.statusMsj.toString(),
+                    style: const TextStyle(fontSize: 20),
+                  ));
+                } else {
+                  return Container(
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    child: ListView.builder(
+                    itemCount: newRequestController.requestList.length, 
+                    itemBuilder: (context, index) {
+                      return NewRequestTile(newRequestController.requestList[index]);
+                    }, )
+                  );
+                }
+              }),
+            ),
           ],
         ),
       ),

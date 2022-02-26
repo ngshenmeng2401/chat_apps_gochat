@@ -1,6 +1,6 @@
 import 'package:chat_apps_gochat/model/contacts_model.dart';
 import 'package:chat_apps_gochat/pages/contacts/new_friend/request_view.dart';
-import 'package:chat_apps_gochat/services/chat_remote_services.dart';
+import 'package:chat_apps_gochat/services/request_remote_services.dart';
 import 'package:chat_apps_gochat/services/user_remote_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -102,7 +102,7 @@ class NewFriendController extends GetxController{
 
     }else{
 
-      ChatRemoteServices.addRequest(email, friendEmail, requestText);
+      RequestRemoteServices.addRequest(email, friendEmail, requestText);
 
     }
   }

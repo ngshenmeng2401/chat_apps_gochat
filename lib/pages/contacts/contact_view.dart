@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:chat_apps_gochat/pages/contacts/contact_menu.dart';
 import 'package:chat_apps_gochat/pages/contacts/contact_tile.dart';
 import 'package:chat_apps_gochat/pages/contacts/contacts_controller.dart';
@@ -63,13 +64,26 @@ class ContactsView extends StatelessWidget {
                 contactsController.navigateNewFriendsPage();
               },
             ),
-            ContactMenu(
-              icon: const Icon(Icons.request_page,
-                size: 30,),
-              text: "New Requests",
-              press: (){
-                contactsController.navigateNewRequestsPage();
-              },
+            Badge(
+              showBadge: contactsController.requestList.length > 0 ? true : false,
+              badgeColor: Colors.blue[300]!,
+              badgeContent: Text(contactsController.requestList.length.toString(),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18
+                ),),
+              position: BadgePosition.topEnd(
+                top: 5,
+                end: 20,
+              ),
+              child: ContactMenu(
+                icon: const Icon(Icons.request_page,
+                  size: 30,),
+                text: "New Requests",
+                press: (){
+                  contactsController.navigateNewRequestsPage();
+                },
+              ),
             ),
             const ContactMenu(
               icon: Icon(Icons.people,

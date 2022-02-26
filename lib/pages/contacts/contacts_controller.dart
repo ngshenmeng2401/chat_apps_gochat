@@ -1,7 +1,10 @@
 import 'package:chat_apps_gochat/model/contacts_model.dart';
+import 'package:chat_apps_gochat/model/friend_request_modal.dart';
 import 'package:chat_apps_gochat/routes/app_pages.dart';
+import 'package:chat_apps_gochat/services/request_remote_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class ContactsController extends GetxController{
 
@@ -37,10 +40,39 @@ class ContactsController extends GetxController{
     ),
   ];
 
+  static final appData = GetStorage();
+
+  var requestList = <FriendRequest>[].obs;
+  late String email;
   var isSearching = false.obs;
   var isTyping = false.obs;
   var searchResult = false.obs;
   var statusMsj = "Loading".obs;
+
+  @override
+  void onInit() {
+    loadFriendRequest();
+    super.onInit();
+  }
+
+  void loadFriendRequest() async{
+
+    email = appData.read("email")??'';
+
+    try {
+      // isLoading(true);
+      var request = await RequestRemoteServices.fetchRequest(email);
+      if (request != null) {
+        requestList.assignAll(request);
+        // print(postList);
+      } else {
+        // productList = null;
+        statusMsj("No any friend request".tr);
+      }
+    } finally {
+      // isLoading(false);
+    }
+  }
   
   late TextEditingController searchPhoneController = TextEditingController();
 
@@ -73,5 +105,6 @@ class ContactsController extends GetxController{
   void navigateNewRequestsPage(){
 
     Get.toNamed(AppRoutes.NewRequestPage);
+    Get.delete<ContactsController>();
   }
 }
