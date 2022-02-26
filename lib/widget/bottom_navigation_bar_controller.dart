@@ -9,7 +9,6 @@ class BottomNavigationBarController extends GetxController {
 
   void changeTabIndex(int index) {
     tabIndex = index;
-    print(tabIndex);
     update();
 
     if(tabIndex == 0){
