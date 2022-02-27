@@ -1,6 +1,6 @@
-import 'package:chat_apps_gochat/model/contacts_model.dart';
 import 'package:chat_apps_gochat/model/friend_model.dart';
 import 'package:chat_apps_gochat/model/friend_request_modal.dart';
+import 'package:chat_apps_gochat/pages/contacts/contact_details.dart';
 import 'package:chat_apps_gochat/routes/app_pages.dart';
 import 'package:chat_apps_gochat/services/friend_remote_service.dart';
 import 'package:chat_apps_gochat/services/request_remote_services.dart';
@@ -30,10 +30,13 @@ class ContactsController extends GetxController{
 
   void loadFriendList() async{
 
+    email = appData.read("keepLogin")??'';
+
     try {
       isLoading(true);
-      var friend = await FriendRemoteServices.fetchFriend();
+      var friend = await FriendRemoteServices.fetchFriend(email);
       if (friend != null) {
+        friendList.clear();
         friendList.assignAll(friend);
         // print(postList);
       } else {
@@ -47,18 +50,15 @@ class ContactsController extends GetxController{
   void loadFriendRequest() async{
 
     email = appData.read("keepLogin")??'';
+    requestList.clear();
 
-    try {
-      // isLoading(true);
-      var request = await RequestRemoteServices.fetchRequest(email);
-      if (request != null) {
-        requestList.assignAll(request);
-      } else {
-        statusMsj("No any friend request".tr);
-      }
-    } finally {
-      // isLoading(false);
+    var request = await RequestRemoteServices.fetchRequest(email);
+    if (request != null) {
+      requestList.assignAll(request);
+    } else {
+      statusMsj("No any friend request".tr);
     }
+    
   }
   
   late TextEditingController searchPhoneController = TextEditingController();
@@ -93,5 +93,10 @@ class ContactsController extends GetxController{
 
     Get.toNamed(AppRoutes.NewRequestPage);
     Get.delete<ContactsController>();
+  }
+
+  void navigateContactDetails(Friend friend){
+
+    Get.to(() => ContactDetailsView(friend));
   }
 }

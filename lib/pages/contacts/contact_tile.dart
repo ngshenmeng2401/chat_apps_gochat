@@ -19,7 +19,9 @@ class ContactsTile extends StatelessWidget {
     return Column(
       children: [
         InkWell(
-          onTap: (){},
+          onTap: (){
+            contactsController.navigateContactDetails(friend);
+          },
           child: Container(
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
             height: screenHeight/13,
