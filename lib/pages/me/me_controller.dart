@@ -1,3 +1,4 @@
+import 'package:chat_apps_gochat/model/friend_model.dart';
 import 'package:chat_apps_gochat/model/user_model.dart';
 import 'package:chat_apps_gochat/routes/app_pages.dart';
 import 'package:chat_apps_gochat/services/user_remote_service.dart';
@@ -9,6 +10,7 @@ class ProfileController extends GetxController{
   final appData = GetStorage();
   String? email;
 
+  var friendList = <Friend>[].obs;
   var userDetails = <User>[].obs;
   var isLoading = true.obs;
   var statusMsj = "Loading".obs;
@@ -48,7 +50,8 @@ class ProfileController extends GetxController{
   }
 
   void logOut(){
-
+    
+    friendList.clear();
     appData.write('isLogged', false);
     appData.remove('keepLogin');
     Get.offNamedUntil(AppRoutes.Login, (route) => false);

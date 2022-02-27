@@ -23,7 +23,7 @@ class RequestRemoteServices{
           return null;
         } else {
           var jsonString = response.body;
-          // print("IN remoteservices" + jsonString);
+          print("IN remoteservices" + jsonString);
           return friendRequestFromJson(jsonString);
         }
       } else {

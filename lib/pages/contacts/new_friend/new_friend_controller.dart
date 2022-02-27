@@ -109,6 +109,6 @@ class NewFriendController extends GetxController{
 
   void navigateAddUserView(Contacts contacts){
 
-    Get.to(RequestView(contacts));
+    Get.to(() => RequestView(contacts));
   }
 }
