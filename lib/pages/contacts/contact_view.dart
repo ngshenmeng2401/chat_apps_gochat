@@ -102,9 +102,10 @@ class ContactsView extends StatelessWidget {
               child: ListView.builder(
                 primary: true,
                 shrinkWrap: true,
-                itemCount: contactsController.contactsModel.length,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: contactsController.friendList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return ContactsTile(index, contactsController.contactsModel[index]);
+                  return ContactsTile(index, contactsController.friendList[index]);
                 },
               ),
             )

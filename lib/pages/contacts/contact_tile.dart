@@ -1,4 +1,4 @@
-import 'package:chat_apps_gochat/model/contacts_model.dart';
+import 'package:chat_apps_gochat/model/friend_model.dart';
 import 'package:chat_apps_gochat/pages/contacts/contacts_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,9 +6,9 @@ import 'package:get/get.dart';
 class ContactsTile extends StatelessWidget {
 
   final contactsController = Get.put(ContactsController());
-  final ContactsModal contactsModal;
+  final Friend friend;
   final int index;
-  ContactsTile(this.index, this.contactsModal, {Key? key}) : super(key: key);
+  ContactsTile(this.index, this.friend, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +29,10 @@ class ContactsTile extends StatelessWidget {
                   flex: 1,
                   child: Container(
                     height: screenHeight/3,
-                    child: Image.asset("${contactsController.contactsModel[index].img}",
-                    height: screenHeight/2,
-                    width: screenWidth/1.3,
-                    fit: BoxFit.fitWidth,),
+                     child: friend.imgStatus == "noimage"
+                      ? Image.asset("assets/images/p1.png",
+                          fit: BoxFit.fitWidth,)
+                      : Image.network("https://javathree99.com/s271059/gochat/images/user_profile/${friend.phoneNo}.png")
                   )
                 ),
                 Expanded(
@@ -43,7 +43,7 @@ class ContactsTile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(contactsController.contactsModel[index].username!,
+                        Text(friend.username!,
                           style: const TextStyle(
                             fontSize: 18
                           ),),
