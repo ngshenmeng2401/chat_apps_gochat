@@ -21,7 +21,7 @@ class ProfileController extends GetxController{
 
   void loadUser() async{
 
-    email = appData.read("email")??'';
+    email = appData.read("keepLogin")??'';
 
     try {
       isLoading(true);

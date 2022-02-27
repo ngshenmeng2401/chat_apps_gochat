@@ -46,7 +46,7 @@ class EditProfileController extends GetxController{
 
   void loadUser() async{
 
-    email = appData.read("email")??'';
+    email = appData.read("keepLogin")??'';
 
     var user = await UserRemoteServices.fetchUser(email!);
     userDetails.assignAll(user!);
@@ -118,7 +118,7 @@ class EditProfileController extends GetxController{
 
     String? username = userNameController.text.toString();
     String? phoneNo = phoneNoController.text.toString();
-    email = appData.read("email")??'';
+    email = appData.read("keepLogin")??'';
 
     if(username.isEmpty){
        Get.snackbar(
@@ -139,7 +139,7 @@ class EditProfileController extends GetxController{
 
     String? username = userNameController.text.toString();
     String? phoneNo = phoneNoController.text.toString();
-    email = appData.read("email")??'';
+    email = appData.read("keepLogin")??'';
 
     if(phoneNo.isEmpty){
        Get.snackbar(

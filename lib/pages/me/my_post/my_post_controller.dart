@@ -42,7 +42,7 @@ class MyPostController extends GetxController{
 
   void loadPost() async{
 
-    email = appData.read("email")??'';
+    email = appData.read("keepLogin")??'';
 
     try {
       isLoading(true);
@@ -116,7 +116,7 @@ class MyPostController extends GetxController{
 
   void addPostWithPic(String base64Image){
 
-    email = appData.read("email")??'';
+    email = appData.read("keepLogin")??'';
     String content = contentController.text.toString();
 
     if(base64Image.isEmpty && content.isEmpty){
@@ -160,7 +160,7 @@ class MyPostController extends GetxController{
 
   void addPostWithoutPic(){
 
-    email = appData.read("email")??'';
+    email = appData.read("keepLogin")??'';
     String content = contentController.text.toString();
 
     if(content.isEmpty){

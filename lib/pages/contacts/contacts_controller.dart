@@ -30,11 +30,9 @@ class ContactsController extends GetxController{
 
   void loadFriendList() async{
 
-    email = appData.read("keepLogin")??'';
-
     try {
       isLoading(true);
-      var friend = await FriendRemoteServices.fetchFriend(email);
+      var friend = await FriendRemoteServices.fetchFriend();
       if (friend != null) {
         friendList.assignAll(friend);
         // print(postList);

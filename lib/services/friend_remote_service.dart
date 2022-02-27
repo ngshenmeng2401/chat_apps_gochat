@@ -8,11 +8,9 @@ class FriendRemoteServices{
 
   static final appData = GetStorage();
   static var client = http.Client();
-  static String email = email = appData.read("keepLogin")??'';
+  static String email = appData.read("keepLogin")??'';
 
-  static Future<List<Friend>?> fetchFriend(String email) async {
-
-    print("a");
+  static Future<List<Friend>?> fetchFriend() async {
 
     var response =
       await client.post(

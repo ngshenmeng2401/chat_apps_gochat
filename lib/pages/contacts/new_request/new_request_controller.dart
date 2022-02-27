@@ -22,7 +22,7 @@ class NewRequestController extends GetxController{
 
   void loadFriendRequest() async{
 
-    email = appData.read("email")??'';
+    email = appData.read("keepLogin")??'';
 
     try {
       isLoading(true);
