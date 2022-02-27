@@ -1,4 +1,4 @@
-import 'package:chat_apps_gochat/model/post_model.dart';
+import 'package:chat_apps_gochat/model/my_post_model.dart';
 import 'package:chat_apps_gochat/pages/me/my_post/my_post_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 class PostTile extends StatelessWidget {
 
   final myPostController = Get.put(MyPostController());
-  final Post postModel;
+  final MyPost postModel;
   final int index;
   PostTile(this.index, this.postModel);
 

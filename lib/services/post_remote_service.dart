@@ -1,4 +1,4 @@
-import 'package:chat_apps_gochat/model/post_model.dart';
+import 'package:chat_apps_gochat/model/my_post_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -9,7 +9,7 @@ class PostRemoteServices {
   static final appData = GetStorage();
   static var client = http.Client();
 
-  static Future<List<Post>?> fetchPost(String email) async {
+  static Future<List<MyPost>?> fetchPost(String email) async {
 
     var response =
       await client.post(

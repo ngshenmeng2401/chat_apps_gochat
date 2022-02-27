@@ -4,12 +4,12 @@
 
 import 'dart:convert';
 
-List<Post> postFromJson(String str) => List<Post>.from(json.decode(str).map((x) => Post.fromJson(x)));
+List<MyPost> postFromJson(String str) => List<MyPost>.from(json.decode(str).map((x) => MyPost.fromJson(x)));
 
-String postToJson(List<Post> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String postToJson(List<MyPost> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class Post {
-    Post({
+class MyPost {
+    MyPost({
         this.postId,
         this.content,
         this.imgStatus,
@@ -21,7 +21,7 @@ class Post {
     String? imgStatus;
     DateTime? datePost;
 
-    factory Post.fromJson(Map<String, dynamic> json) => Post(
+    factory MyPost.fromJson(Map<String, dynamic> json) => MyPost(
         postId: json["post_id"],
         content: json["content"],
         imgStatus: json["img_status"],

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:chat_apps_gochat/model/post_model.dart';
+import 'package:chat_apps_gochat/model/my_post_model.dart';
 import 'package:chat_apps_gochat/pages/me/my_post/my_post_details.dart';
 import 'package:chat_apps_gochat/routes/app_pages.dart';
 import 'package:chat_apps_gochat/services/post_remote_service.dart';
@@ -30,7 +30,7 @@ class MyPostController extends GetxController{
   var compressImagePath = ''.obs;
   var compressImageSize = ''.obs;
 
-  var postList = <Post>[].obs;
+  var postList = <MyPost>[].obs;
   var isLoading = true.obs;
   var statusMsj = "Loading".obs;
 
@@ -214,7 +214,7 @@ class MyPostController extends GetxController{
     Get.toNamed(AppRoutes.PostWithoutPicPage)!.then((value) => loadPost());
   }
 
-  void navigatePostDetails(Post post) {
+  void navigatePostDetails(MyPost post) {
 
     Get.to(() => MyPostDetailsView(post));
   }
