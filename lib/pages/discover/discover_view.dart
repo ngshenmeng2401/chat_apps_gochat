@@ -87,7 +87,7 @@ class DiscoverView extends StatelessWidget {
                   Icons.call, 
                   size: 30,
                   color: Colors.greenAccent),
-                text: "WeChat Out",
+                text: "GoChat Out",
                 press: null,
               ),
             ],

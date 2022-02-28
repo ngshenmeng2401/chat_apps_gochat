@@ -20,20 +20,53 @@ class MomentsView extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
           child: Column(
             children: [
               LimitedBox(
-                child: ListView.builder(
-                  primary: true,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: momentsController.moments.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return MomentTile(momentsController.moments[index]);
-                  },
-                ),
-              )
+              child: Obx(() {
+                  return ListView.builder(
+                    primary: true,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: momentsController.momentList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Obx((){
+                        if (momentsController.isLoading.value) {
+                          return Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  momentsController.statusMsj.toString().tr,
+                                  style: const TextStyle(fontSize: 20),
+                                ),
+                              ],
+                            ),
+                          );
+                        }else{
+                          return MomentTile(momentsController.momentList[index]);
+                        }
+                      });
+                    },
+                  );
+              }),
+            ),
+              // LimitedBox(
+              //   child: ListView.builder(
+              //     primary: true,
+              //     shrinkWrap: true,
+              //     physics: const NeverScrollableScrollPhysics(),
+              //     itemCount: momentsController.momentList.length,
+              //     itemBuilder: (BuildContext context, int index) {
+              //       return MomentTile(momentsController.momentList[index]);
+              //     },
+              //   ),
+              // )
             ],
           ),
         ),

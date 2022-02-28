@@ -10,100 +10,44 @@ String momentToJson(List<Moment> data) => json.encode(List<dynamic>.from(data.ma
 
 class Moment {
     Moment({
-        this.emailA,
-        this.emailB,
+        this.writerEmail,
         this.postId,
         this.content,
         this.momentImg,
+        this.datePost,
         this.username,
         this.phoneNo,
         this.profileImg,
     });
 
-    String? emailA;
-    String? emailB;
+    String? writerEmail;
     String? postId;
     String? content;
     String? momentImg;
+    DateTime? datePost;
     String? username;
     String? phoneNo;
     String? profileImg;
 
     factory Moment.fromJson(Map<String, dynamic> json) => Moment(
-        emailA: json["emaila"],
-        emailB: json["emailb"],
+        writerEmail: json["writerEmail"],
         postId: json["post_id"],
         content: json["content"],
         momentImg: json["moment_img"],
+        datePost: DateTime.parse(json["date_post"]),
         username: json["username"],
         phoneNo: json["phone_no"],
         profileImg: json["profile_img"],
     );
 
     Map<String, dynamic> toJson() => {
-        "emaila": emailA,
-        "emailb": emailB,
+        "writerEmail": writerEmail,
         "post_id": postId,
         "content": content,
         "moment_img": momentImg,
+        "date_post": datePost!.toIso8601String(),
         "username": username,
         "phone_no": phoneNo,
         "profile_img": profileImg,
     };
-}
-
-// enum Email { MENG_GMAIL_COM, JIMMYTAN_GMAIL_COM, STARGOH_GMAIL_COM }
-
-// final emailValues = EnumValues({
-//     "jimmytan@gmail.com": Email.JIMMYTAN_GMAIL_COM,
-//     "meng@gmail.com": Email.MENG_GMAIL_COM,
-//     "stargoh@gmail.com": Email.STARGOH_GMAIL_COM
-// });
-
-// enum Img { NOIMAGE, YES }
-
-// final imgValues = EnumValues({
-//     "noimage": Img.NOIMAGE,
-//     "yes": Img.YES
-// });
-
-// enum Username { BIG_MOUTH_MENG, JIMMY_TAN, STAR_GOH }
-
-// final usernameValues = EnumValues({
-//     "Big Mouth Meng": Username.BIG_MOUTH_MENG,
-//     "Jimmy Tan": Username.JIMMY_TAN,
-//     "Star Goh": Username.STAR_GOH
-// });
-
-// class EnumValues<T> {
-//     Map<String, T> map;
-//     Map<T, String> reverseMap;
-
-//     EnumValues(this.map);
-
-//     Map<T, String> get reverse {
-//         if (reverseMap == null) {
-//             reverseMap = map.map((k, v) => new MapEntry(v, k));
-//         }
-//         return reverseMap;
-//     }
-// }
-
-
-
-class MomentModal{
-
-  late String? id;
-  late String? email;
-  late String? content;
-  late String? imgStatus;
-
-  MomentModal({
-
-    this.id,
-    this.email,
-    this.content,
-    this.imgStatus,
-
-  });
 }

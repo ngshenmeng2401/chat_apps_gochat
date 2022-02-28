@@ -59,15 +59,17 @@ class PostRemoteServices {
     }
   }
 
-  static Future<String?> deletePost(String postId, String imgStatus) async {
+  static Future<String?> deletePost(String email, String postId, String imgStatus) async {
     
-    print(postId);
-    print(imgStatus);
+    // print(email);
+    // print(postId);
+    // print(imgStatus);
 
     var response = await client.post(
 
       Uri.parse('https://javathree99.com/s271059/gochat/php/delete_post.php'), 
       body: {
+      "email" : email,
       "postId" : postId,
       "imgStatus" : imgStatus,
     });

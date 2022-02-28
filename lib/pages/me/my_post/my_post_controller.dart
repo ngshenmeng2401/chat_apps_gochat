@@ -186,6 +186,8 @@ class MyPostController extends GetxController{
 
   void deletePostDialog(String postId, String imgStatus) {
 
+    email = appData.read("keepLogin")??'';
+
     Get.defaultDialog(
       title: "Are you sure ?".tr,
       content: Column(),
@@ -194,7 +196,7 @@ class MyPostController extends GetxController{
       onConfirm:() => {
         Get.back(),
         postList.clear(),
-        PostRemoteServices.deletePost(postId, imgStatus),
+        PostRemoteServices.deletePost(email, postId, imgStatus),
         Get.back(),
         Future.delayed(const Duration(seconds: 2), () {
           loadPost();
