@@ -51,12 +51,12 @@ class RequestRemoteServices{
     if (response.body == "success") {
       var resp = response.body;
       
-      getSnackBar("Post Successful", "");
+      getSnackBar("Request Successful", "");
 
       return resp;
     } else {
       // show error message
-      getSnackBar("Post Failed", "Please check your input value.");
+      getSnackBar("Request Failed", "");
       return null;
       // throw Exception("Error");
     }
@@ -78,12 +78,12 @@ class RequestRemoteServices{
     if (response.body == "success") {
       var resp = response.body;
       
-      getSnackBar("Post Successful", "");
+      getSnackBar("Accept Successful", "");
 
       return resp;
     } else {
       // show error message
-      getSnackBar("Post Failed", "Please check your input value.");
+      getSnackBar("Failed", "");
       return null;
       // throw Exception("Error");
     }
