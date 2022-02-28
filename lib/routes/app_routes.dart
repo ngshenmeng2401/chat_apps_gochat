@@ -18,6 +18,7 @@ abstract class AppRoutes{
 
   //Discover
   static const DiscoverPage = '/discoverpage';
+  static const MomentPage = '/momentpage';
 
   //Me
   static const MePage = '/mepage';

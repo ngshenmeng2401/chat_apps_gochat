@@ -84,6 +84,12 @@ class ContactsController extends GetxController{
     statusMsj("Search_Product".tr);
   }
 
+  void loadAllList(){
+
+    loadFriendRequest();
+    loadFriendList();
+  }
+
   void navigateNewFriendsPage(){
 
     Get.toNamed(AppRoutes.NewFriendsPage);
@@ -91,7 +97,7 @@ class ContactsController extends GetxController{
 
   void navigateNewRequestsPage(){
 
-    Get.toNamed(AppRoutes.NewRequestPage);
+    Get.toNamed(AppRoutes.NewRequestPage)!.then((value) => loadAllList());
     Get.delete<ContactsController>();
   }
 

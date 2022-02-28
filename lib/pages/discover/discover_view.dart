@@ -1,9 +1,12 @@
+import 'package:chat_apps_gochat/pages/discover/discover_controller.dart';
 import 'package:chat_apps_gochat/pages/discover/discover_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DiscoverView extends StatelessWidget {
-  const DiscoverView({ Key? key }) : super(key: key);
+  DiscoverView({ Key? key }) : super(key: key);
+
+  final discoverController = Get.put(DiscoverController());
 
   @override
   Widget build(BuildContext context) {
@@ -15,17 +18,19 @@ class DiscoverView extends StatelessWidget {
         child: Container(
           color: Colors.grey[200],
           child: Column(
-            children: const [
+            children: [
               DiscoverMenu(
-                icon: Icon(
+                icon: const Icon(
                   Icons.mode_comment, 
                   size: 30,
                   color: Colors.greenAccent),
                 text: "Moment",
-                press: null,
+                press: (){
+                  discoverController.navigateMomentPage();
+                },
               ),
-              SizedBox(height:5),
-              DiscoverMenu(
+              const SizedBox(height:5),
+              const DiscoverMenu(
                 icon: Icon(
                   Icons.scanner_outlined, 
                   size: 30,
@@ -33,7 +38,7 @@ class DiscoverView extends StatelessWidget {
                 text: "Scan",
                 press: null,
               ),
-              DiscoverMenu(
+              const DiscoverMenu(
                 icon: Icon(
                   Icons.phone, 
                   size: 30,
@@ -41,8 +46,8 @@ class DiscoverView extends StatelessWidget {
                 text: "Shake",
                 press: null,
               ),
-              SizedBox(height:5),
-              DiscoverMenu(
+              const SizedBox(height:5),
+              const DiscoverMenu(
                 icon: Icon(
                   Icons.payment, 
                   size: 30,
@@ -50,7 +55,7 @@ class DiscoverView extends StatelessWidget {
                 text: "Top Stories",
                 press: null,
               ),
-              DiscoverMenu(
+              const DiscoverMenu(
                 icon: Icon(
                   Icons.search_outlined, 
                   size: 30,
@@ -58,8 +63,8 @@ class DiscoverView extends StatelessWidget {
                 text: "Search",
                 press: null,
               ),
-              SizedBox(height:5),
-              DiscoverMenu(
+              const SizedBox(height:5),
+              const DiscoverMenu(
                 icon: Icon(
                   Icons.nature_people_outlined, 
                   size: 30,
@@ -67,8 +72,8 @@ class DiscoverView extends StatelessWidget {
                 text: "People Nearby",
                 press: null,
               ),
-              SizedBox(height:5),
-              DiscoverMenu(
+              const SizedBox(height:5),
+              const DiscoverMenu(
                 icon: Icon(
                   Icons.local_activity_outlined, 
                   size: 30,
@@ -76,8 +81,8 @@ class DiscoverView extends StatelessWidget {
                 text: "Mini Programs",
                 press: null,
               ),
-              SizedBox(height:5),
-              DiscoverMenu(
+              const SizedBox(height:5),
+              const DiscoverMenu(
                 icon: Icon(
                   Icons.call, 
                   size: 30,

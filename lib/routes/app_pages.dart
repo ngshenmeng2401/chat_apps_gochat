@@ -4,6 +4,7 @@ import 'package:chat_apps_gochat/pages/contacts/new_friend/request_view.dart';
 import 'package:chat_apps_gochat/pages/contacts/new_friend/new_friend_view.dart';
 import 'package:chat_apps_gochat/pages/contacts/new_request/new_request_view.dart';
 import 'package:chat_apps_gochat/pages/discover/discover_view.dart';
+import 'package:chat_apps_gochat/pages/discover/moments/moments_view.dart';
 import 'package:chat_apps_gochat/pages/login/login_binding.dart';
 import 'package:chat_apps_gochat/pages/login/login_view.dart';
 import 'package:chat_apps_gochat/pages/me/edit_profile/edit_profile_pic_view.dart';
@@ -76,8 +77,14 @@ class AppPages{
     //Discover
     GetPage(
       name: AppRoutes.DiscoverPage,
-      page: () => const DiscoverView(),
+      page: () => DiscoverView(),
     ),
+
+    GetPage(
+      name: AppRoutes.MomentPage,
+      page: () => MomentsView(),
+    ),
+
 
     //Me
     GetPage(
