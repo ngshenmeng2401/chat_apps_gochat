@@ -1,4 +1,4 @@
-import 'package:chat_apps_gochat/model/friend_request_modal.dart';
+import 'package:chat_apps_gochat/model/friend_request_model.dart';
 import 'package:chat_apps_gochat/pages/contacts/new_request/new_request_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

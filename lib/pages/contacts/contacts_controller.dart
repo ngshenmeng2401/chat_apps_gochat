@@ -1,5 +1,5 @@
 import 'package:chat_apps_gochat/model/friend_model.dart';
-import 'package:chat_apps_gochat/model/friend_request_modal.dart';
+import 'package:chat_apps_gochat/model/friend_request_model.dart';
 import 'package:chat_apps_gochat/pages/contacts/contact_details.dart';
 import 'package:chat_apps_gochat/routes/app_pages.dart';
 import 'package:chat_apps_gochat/services/friend_remote_service.dart';
