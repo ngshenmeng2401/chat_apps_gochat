@@ -12,9 +12,22 @@ class SignUpController extends GetxController{
   late TextEditingController passwordController = TextEditingController();
   late TextEditingController confirmPasswordController = TextEditingController();
 
+  var isTyping = false.obs;
+
   void navigateLoginView(){
 
     Get.offNamed(AppRoutes.Login);
+  }
+
+  void checkTextField(){
+
+    if(emailController.text.isEmpty || userNameController.text.isEmpty || phoneNoController.text.isEmpty || passwordController.text.isEmpty || confirmPasswordController.text.isEmpty){
+
+      isTyping.value = false;
+
+    }else{
+      isTyping.value = true;
+    }
   }
 
   void signUpDialog(){
@@ -30,7 +43,7 @@ class SignUpController extends GetxController{
       textCancel: "No".tr,
       onConfirm: () {
         Get.back();
-        checkSignUp();
+        signUp();
       },
       onCancel: () => Get.back(),
       cancelTextColor: Colors.black,
@@ -39,7 +52,7 @@ class SignUpController extends GetxController{
     );
   }
 
-  void checkSignUp(){
+  void signUp(){
 
     String email = emailController.text.toString();
     String username = userNameController.text.toString();
@@ -47,70 +60,7 @@ class SignUpController extends GetxController{
     String password = passwordController.text.toString();
     String confirmPassword = confirmPasswordController.text.toString();
 
-    if(email.isEmpty && username.isEmpty && phoneNo.isEmpty && password.isEmpty && confirmPassword.isEmpty){
-
-      Get.snackbar(
-        "Error","Please fill in all textfield",
-        backgroundColor: Colors.white60,
-        colorText: Colors.black,
-        icon: const Icon(Icons.error, color: Colors.black),
-        snackPosition: SnackPosition.TOP,
-      );
-    
-    }else if (email.isEmpty){
-
-      Get.snackbar(
-        "Error","Email is empty",
-        backgroundColor: Colors.white60,
-        colorText: Colors.black,
-        icon: const Icon(Icons.error, color: Colors.black),
-        snackPosition: SnackPosition.TOP,  
-      );
-
-    }else if (username.isEmpty){
-
-      Get.snackbar(
-        "Error","Username is empty",
-        backgroundColor: Colors.white60,
-        colorText: Colors.black,
-        icon: const Icon(Icons.error, color: Colors.black),
-        snackPosition: SnackPosition.TOP,  
-      );
-
-    }else if (phoneNo.isEmpty){
-
-      Get.snackbar(
-        "Error","Phone No is empty",
-        backgroundColor: Colors.white60,
-        colorText: Colors.black,
-        icon: const Icon(Icons.error, color: Colors.black),
-        snackPosition: SnackPosition.TOP,  
-      );
-
-    }else if (password.isEmpty || confirmPassword.isEmpty){
-
-      Get.snackbar(
-        "Error","Password is empty",
-        backgroundColor: Colors.white60,
-        colorText: Colors.black,
-        icon: const Icon(Icons.error, color: Colors.black),
-        snackPosition: SnackPosition.TOP,  
-      );
-
-    }else if (password!=confirmPassword || confirmPassword!=password){
-
-      Get.snackbar(
-        "Error","Both password is different",
-        backgroundColor: Colors.white60,
-        colorText: Colors.black,
-        icon: const Icon(Icons.error, color: Colors.black),
-        snackPosition: SnackPosition.TOP,  
-      );
-
-    }else{
-
-      UserRemoteServices.signUpUser(email,username,phoneNo,password);
+    UserRemoteServices.signUpUser(email,username,phoneNo,password);
       
-    }
   }
 }

@@ -42,6 +42,7 @@ class SignUpView extends GetView<SignUpController> {
                       Padding(
                         padding:const EdgeInsets.fromLTRB(15,0,15,0),
                         child: TextField(
+                          onChanged: (value) => controller.checkTextField(),
                           keyboardType: TextInputType.emailAddress,
                           controller: controller.emailController,
                           decoration: InputDecoration(
@@ -54,6 +55,7 @@ class SignUpView extends GetView<SignUpController> {
                       Padding(
                         padding:const EdgeInsets.fromLTRB(15,0,15,0),
                         child: TextField(
+                          onChanged: (value) => controller.checkTextField(),
                           keyboardType: TextInputType.name,
                           controller: controller.userNameController,
                           decoration: InputDecoration(
@@ -66,6 +68,7 @@ class SignUpView extends GetView<SignUpController> {
                       Padding(
                         padding:const EdgeInsets.fromLTRB(15,0,15,0),
                         child: TextField(
+                          onChanged: (value) => controller.checkTextField(),
                           keyboardType: TextInputType.phone,
                           controller: controller.phoneNoController,
                           decoration: InputDecoration(
@@ -78,6 +81,7 @@ class SignUpView extends GetView<SignUpController> {
                       Padding(
                         padding:const EdgeInsets.fromLTRB(15,0,15,0),
                         child: TextField(
+                          onChanged: (value) => controller.checkTextField(),
                           keyboardType: TextInputType.visiblePassword,
                           controller: controller.passwordController,
                           decoration: InputDecoration(
@@ -91,6 +95,7 @@ class SignUpView extends GetView<SignUpController> {
                       Padding(
                         padding:const EdgeInsets.fromLTRB(15,0,15,15),
                         child: TextField(
+                          onChanged: (value) => controller.checkTextField(),
                           controller: controller.confirmPasswordController,
                           decoration: InputDecoration(
                             labelText: 
@@ -104,23 +109,29 @@ class SignUpView extends GetView<SignUpController> {
                   ),
                 ),
                 const SizedBox(height:15),
-                MaterialButton(
+                Obx(() => MaterialButton(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                   height: screenHeight/18,
                   minWidth: screenWidth/1.1,
-                  color: Colors.black,
-                  onPressed: (){
-                    controller.signUpDialog();
-                  },
+                  color: controller.isTyping.value == true
+                    ? Colors.black
+                    : Colors.grey[200],
+                  onPressed: controller.isTyping.value == true
+                    ? (){
+                      controller.signUpDialog();
+                    }
+                    : null,
                   child: Text(
                     "Sign Up".tr,
-                    style: const TextStyle(
-                        color: Colors.white,
+                    style: TextStyle(
+                        color: controller.isTyping.value == true
+                        ? Colors.white
+                        : Colors.transparent,
                         fontSize: 20,
                     )),
-                ),
+                )),
                 const SizedBox(height:20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
