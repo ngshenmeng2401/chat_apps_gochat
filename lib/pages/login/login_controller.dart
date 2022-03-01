@@ -13,6 +13,7 @@ class LoginController extends GetxController{
   var email = '';
   var password = '';
   var rememberMe = false;
+  var isTyping = false.obs;
 
   @override
   void onInit() {
@@ -22,11 +23,18 @@ class LoginController extends GetxController{
     passwordController = TextEditingController();
     forgotPasswordEmailController = TextEditingController();
     loadPreference();
+    checkTextField();
   }
 
-  @override
-  void onClose() {
-    
+  void checkTextField(){
+
+    if(emailController.text.isEmpty || passwordController.text.isEmpty){
+
+      isTyping.value = false;
+
+    }else{
+      isTyping.value = true;
+    }
   }
 
   @override
@@ -81,6 +89,7 @@ class LoginController extends GetxController{
         icon: const Icon(Icons.error, color: Colors.black),
         snackPosition: SnackPosition.TOP,  
       );
+      isTyping.value = true;
     return;
     }else{  
       
@@ -99,6 +108,7 @@ class LoginController extends GetxController{
       passwordController.text = "";
       rememberMe = false ;
       update();
+      isTyping.value = false;
       return;
     }
   }
@@ -147,40 +157,7 @@ class LoginController extends GetxController{
     String email = emailController.text.toString();
     String password = passwordController.text.toString();
 
-    if(email.isEmpty && password.isEmpty){
-
-      Get.snackbar(
-        "Error","Email & Password is empty",
-        backgroundColor: Colors.white60,
-        colorText: Colors.black,
-        icon: const Icon(Icons.error, color: Colors.black),
-        snackPosition: SnackPosition.TOP,  
-      );
-
-    }else if(email.isEmpty){
-
-      Get.snackbar(
-        "Error","Email is empty",
-        backgroundColor: Colors.white60,
-        colorText: Colors.black,
-        icon: const Icon(Icons.error, color: Colors.black),
-        snackPosition: SnackPosition.TOP,  
-      );
-
-    }else if(password.isEmpty){
-
-      Get.snackbar(
-        "Error","Password is empty",
-        backgroundColor: Colors.white60,
-        colorText: Colors.black,
-        icon: const Icon(Icons.error, color: Colors.black),
-        snackPosition: SnackPosition.TOP,  
-      );
-
-    }else{
-
-      UserRemoteServices.loginUser(emailController.text.toString(), passwordController.text.toString());
+    UserRemoteServices.loginUser(emailController.text.toString(), passwordController.text.toString());
     
-    }
   }
 }

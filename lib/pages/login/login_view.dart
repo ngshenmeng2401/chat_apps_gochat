@@ -48,6 +48,7 @@ class LoginView extends GetView<LoginController> {
                               Icons.email,
                             ),
                             title: TextField(
+                              onChanged: (value) => controller.checkTextField(),
                               keyboardType: TextInputType.emailAddress,
                               controller: _.emailController,
                               decoration: InputDecoration(
@@ -65,6 +66,7 @@ class LoginView extends GetView<LoginController> {
                               Icons.lock,
                             ),
                             title: TextField(
+                              onChanged: (value) => controller.checkTextField(),
                               keyboardType: TextInputType.emailAddress,
                               controller: _.passwordController,
                               decoration: InputDecoration(
@@ -116,22 +118,25 @@ class LoginView extends GetView<LoginController> {
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                  child: MaterialButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    minWidth: screenWidth / 1.1,
-                    height: screenHeight / 18,
-                    color: Colors.black,
-                    onPressed: () {
-                      controller.loginUser();
-                    },
-                    child: Text("Login".tr,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        )),
-                  ),
+                  child: Obx(() => MaterialButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      minWidth: screenWidth / 1.1,
+                      height: screenHeight / 18,
+                      color: Colors.black,
+                      onPressed: controller.isTyping.value == true
+                      ? () {
+                          controller.loginUser();
+                        }
+                      : null,
+                      child: Text("Login".tr,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          )),
+                    )
+                  )
                 ),
                 Padding(
                     padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
