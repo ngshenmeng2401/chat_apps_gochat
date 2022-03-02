@@ -1,4 +1,5 @@
 import 'package:chat_apps_gochat/model/moments_model.dart';
+import 'package:chat_apps_gochat/pages/discover/moments/comment_tile.dart';
 import 'package:chat_apps_gochat/pages/discover/moments/moment_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,7 +9,9 @@ class MomentTile extends StatelessWidget {
   
   final momentsController = Get.put(MomentsController());
   final Moment moment;
-  MomentTile(this.moment, {Key? key}) : super(key: key);
+  final int index;
+  final bool comment;
+  MomentTile(this.index, this.moment, this.comment, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +45,7 @@ class MomentTile extends StatelessWidget {
                 )
               ),
               Expanded(
-                flex: 8,
+                flex: 9,
                 child: Container(
                   padding: const EdgeInsets.fromLTRB(15, 10, 5, 10),
                   child: Column(
@@ -61,10 +64,6 @@ class MomentTile extends StatelessWidget {
                     ],
                   ),
                 )
-              ),
-              Expanded(
-                flex: 1,
-                child: Container()
               ),
             ],
           ),
@@ -92,27 +91,6 @@ class MomentTile extends StatelessWidget {
                       ? Container()
                       : Image.network("https://javathree99.com/s271059/gochat/images/post/${moment.postId}.png",
                         ),
-                      const SizedBox(height: 5),
-                      Row(
-                        children: [
-                          Text(datePosted),
-                          const SizedBox(width: 10),
-                          Obx(() => 
-                          moment.phoneNo == momentsController.phoneNo.value
-                            ? GestureDetector(
-                                onTap: (){
-                                  momentsController.deletePost(moment.postId!, moment.momentImg!);
-                                },
-                                child: Text("Delete",
-                                  style: TextStyle(
-                                    color: Colors.blue[700],
-                                    decoration: TextDecoration.underline,
-                                  ),),
-                              )
-                            : Container()
-                          )
-                        ],
-                      ),
                     ],
                   ),
                 )
@@ -126,62 +104,201 @@ class MomentTile extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Obx(() => momentsController.isOption.value == true
-              ? Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.grey[350],
+            Expanded(
+              flex: 1,
+              child: Container(),),
+            Expanded(
+              flex: 4,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                child: Row(
+                  children: [
+                    Text(datePosted),
+                      const SizedBox(width: 10),
+                      Obx(() => 
+                      moment.phoneNo == momentsController.phoneNo.value
+                        ? GestureDetector(
+                            onTap: (){
+                              momentsController.deletePost(moment.postId!, moment.momentImg!);
+                            },
+                            child: Text("Delete",
+                              style: TextStyle(
+                                color: Colors.blue[700],
+                                decoration: TextDecoration.underline,
+                              ),),
+                          )
+                        : Container()
+                      ),
+                  ],
+                ),
+              ),),
+            Expanded(
+              flex: 5,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Obx(() => momentsController.optionList[index] == true
+                    ? Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.grey[350],
+                        ),
+                        width: screenWidth/3,
+                        height: 30,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            GestureDetector(
+                              onTap: (){},
+                              child: Row(
+                                children: const [
+                                  Icon(Icons.favorite_border_outlined,
+                                    size: 20,),
+                                  Text(" Like"),
+                                ],
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: (){
+                                momentsController.displayCommentBox(comment, index);
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  Icon(Icons.mode_comment_outlined,
+                                    size: 20,),
+                                  Text(" Comment"),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : Container(),
                   ),
-                  width: screenWidth/2.5,
-                  height: 40,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  const SizedBox(width: 5),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.grey[300],
+                    ),
+                    width: screenWidth/12,
+                    height: 25,
+                    child: IconButton(
+                      padding: const EdgeInsets.all(0),
+                      onPressed: (){
+                        momentsController.displayLikeComment(momentsController.optionList[index], index);
+                      },
+                      icon: const Icon(Icons.more_horiz)
+                    ),
+                  ),
+                ],
+              ))
+          ],
+        ),
+        const SizedBox(height: 5),
+        LimitedBox(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                flex: 1,
+                child: Container(),
+              ),
+              Expanded(
+                flex: 9,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                  child: Column(
                     children: [
-                      GestureDetector(
-                        onTap: (){},
-                        child: Row(
-                          children: const [
-                            Icon(Icons.favorite_border_outlined,
-                              size: 20,),
-                            Text(" Like"),
-                          ],
-                        ),
+                      LimitedBox(
+                        child: Obx(() {
+                          return ListView.builder(
+                            primary: true,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: momentsController.commentList.length, 
+                            itemBuilder: (BuildContext context, int index) {
+                              return CommentTile(index, momentsController.commentList[index],moment.postId!);
+                            },
+                          );
+                        }),
                       ),
-                      GestureDetector(
-                        onTap: (){},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Icon(Icons.mode_comment_outlined,
-                              size: 20,),
-                            Text(" Comment"),
-                          ],
-                        ),
-                      ),
+                      
+                      Obx(() {
+                        if(momentsController.commentBoxList[index] == true){
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                flex: 7,
+                                child: Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.fromLTRB(10, 5, 0, 5),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: Colors.grey[300],
+                                  ),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: TextField(
+                                      enableInteractiveSelection: true,
+                                      style: const TextStyle(
+                                        fontSize: 14
+                                      ),
+                                      onChanged: (value) {
+                                        momentsController.checkTextField();
+                                      },
+                                      keyboardType: TextInputType.emailAddress,
+                                      controller: momentsController.commentController,
+                                      decoration: InputDecoration.collapsed(
+                                        hintText: "Comment".tr,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: IconButton(
+                                  icon: const Icon(Icons.cancel_outlined),
+                                  onPressed: (){
+                                    momentsController.closeCommentBox(index);
+                                  },
+                                )
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: MaterialButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  height: 25,
+                                  color: Colors.blueAccent,
+                                  onPressed: momentsController.isTyping.value == true
+                                  ? () {
+                                    momentsController.sendCommentPost(moment.postId!,index);
+                                  }
+                                  : null,
+                                  child: const Text("Send"),
+                                ))
+                            ],
+                          );
+                        }else{
+                          return
+                          const Padding(padding: EdgeInsets.all(0));
+                        }
+                      }
+                    ),
                     ],
                   ),
                 )
-              : Container(),
-            ),
-            const SizedBox(width: 10),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: Colors.grey[300],
               ),
-              width: screenWidth/12,
-              height: 25,
-              child: IconButton(
-                padding: const EdgeInsets.all(0),
-                onPressed: (){
-                  momentsController.displayLikeComment(momentsController.isOption.value);
-                },
-                icon: const Icon(Icons.more_horiz)
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
         const SizedBox(height: 5),
         const Divider(

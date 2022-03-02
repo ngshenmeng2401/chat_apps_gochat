@@ -13,10 +13,11 @@ class MomentsView extends StatelessWidget {
 
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
+    int index = 0;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Moments")
+        title: const Text("Moments"),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -24,49 +25,18 @@ class MomentsView extends StatelessWidget {
           child: Column(
             children: [
               LimitedBox(
-              child: Obx(() {
+                child: Obx(() {
                   return ListView.builder(
                     primary: true,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: momentsController.momentList.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Obx((){
-                        if (momentsController.isLoading.value) {
-                          return Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  momentsController.statusMsj.toString().tr,
-                                  style: const TextStyle(fontSize: 20),
-                                ),
-                              ],
-                            ),
-                          );
-                        }else{
-                          return MomentTile(momentsController.momentList[index]);
-                        }
-                      });
+                      return MomentTile(index,momentsController.momentList[index], momentsController.isComment.value);
                     },
                   );
-              }),
-            ),
-              // LimitedBox(
-              //   child: ListView.builder(
-              //     primary: true,
-              //     shrinkWrap: true,
-              //     physics: const NeverScrollableScrollPhysics(),
-              //     itemCount: momentsController.momentList.length,
-              //     itemBuilder: (BuildContext context, int index) {
-              //       return MomentTile(momentsController.momentList[index]);
-              //     },
-              //   ),
-              // )
+                }),
+              ),
             ],
           ),
         ),
