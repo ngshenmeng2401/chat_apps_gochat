@@ -19,6 +19,7 @@ class NewFriendView extends StatelessWidget {
         title: Obx(() => newFriendController.isSearching.value == false
           ? Text("New Friends".tr)
           : TextField(
+              enableInteractiveSelection: true,
               keyboardType: TextInputType.phone,
               controller: newFriendController.searchPhoneController,
               decoration: InputDecoration(
