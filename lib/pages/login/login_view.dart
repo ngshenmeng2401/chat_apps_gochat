@@ -66,6 +66,7 @@ class LoginView extends GetView<LoginController> {
                               Icons.lock,
                             ),
                             title: TextField(
+                              enableInteractiveSelection: true,
                               onChanged: (value) => controller.checkTextField(),
                               keyboardType: TextInputType.emailAddress,
                               controller: _.passwordController,

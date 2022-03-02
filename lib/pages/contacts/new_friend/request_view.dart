@@ -55,6 +55,7 @@ class RequestView extends StatelessWidget {
               Container(
                 width: screenWidth/1.2,
                 child: TextField(
+                    enableInteractiveSelection: true,
                     keyboardType: TextInputType.phone,
                     controller: newFriendController.requestController,
                     decoration: InputDecoration(

@@ -42,6 +42,7 @@ class SignUpView extends GetView<SignUpController> {
                       Padding(
                         padding:const EdgeInsets.fromLTRB(15,0,15,0),
                         child: TextField(
+                          enableInteractiveSelection: true,
                           onChanged: (value) => controller.checkTextField(),
                           keyboardType: TextInputType.emailAddress,
                           controller: controller.emailController,
@@ -55,6 +56,7 @@ class SignUpView extends GetView<SignUpController> {
                       Padding(
                         padding:const EdgeInsets.fromLTRB(15,0,15,0),
                         child: TextField(
+                          enableInteractiveSelection: true,
                           onChanged: (value) => controller.checkTextField(),
                           keyboardType: TextInputType.name,
                           controller: controller.userNameController,
@@ -68,6 +70,7 @@ class SignUpView extends GetView<SignUpController> {
                       Padding(
                         padding:const EdgeInsets.fromLTRB(15,0,15,0),
                         child: TextField(
+                          enableInteractiveSelection: true,
                           onChanged: (value) => controller.checkTextField(),
                           keyboardType: TextInputType.phone,
                           controller: controller.phoneNoController,

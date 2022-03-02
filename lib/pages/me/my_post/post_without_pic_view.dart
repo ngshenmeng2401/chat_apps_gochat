@@ -71,6 +71,7 @@ class PostWithoutPictureView extends StatelessWidget {
               Flexible(
                 flex: 2,
                 child: TextField(
+                  enableInteractiveSelection: true,
                   keyboardType: TextInputType.emailAddress,
                   controller: myPostController.contentController,
                   decoration: InputDecoration(

@@ -21,6 +21,7 @@ class ContactsView extends StatelessWidget {
         title: Obx(() => contactsController.isSearching.value == false
           ? Text("Contacts".tr)
           : TextField(
+              enableInteractiveSelection: true,
               keyboardType: TextInputType.phone,
               controller: contactsController.searchPhoneController,
               decoration: InputDecoration(

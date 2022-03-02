@@ -45,6 +45,7 @@ class EditPhoneNoView extends StatelessWidget {
           child: Column(
             children: [
               TextField(
+                enableInteractiveSelection: true,
                 keyboardType: TextInputType.emailAddress,
                 controller: editProfileController.phoneNoController,
                 decoration: InputDecoration(

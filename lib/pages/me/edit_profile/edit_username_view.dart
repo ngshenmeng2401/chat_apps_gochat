@@ -45,6 +45,7 @@ class EditUsernameView extends StatelessWidget {
           child: Column(
             children: [
               TextField(
+                enableInteractiveSelection: true,
                 keyboardType: TextInputType.emailAddress,
                 controller: editProfileController.userNameController,
                 decoration: InputDecoration(
