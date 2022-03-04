@@ -1,12 +1,13 @@
 import 'package:chat_apps_gochat/model/friend_model.dart';
-import 'package:chat_apps_gochat/pages/contacts/contacts_controller.dart';
+import 'package:chat_apps_gochat/pages/contacts/contact_details/contact_details_controller.dart';
+import 'package:chat_apps_gochat/pages/contacts/contact_details/contact_details_moment_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ContactDetailsView extends StatelessWidget {
 
-  final contactsController = Get.put(ContactsController());
+  final contactDetailController = Get.put(ContactDetailController());
   final Friend friend;
   ContactDetailsView(this.friend, {Key? key}) : super(key: key);
 
@@ -102,16 +103,14 @@ class ContactDetailsView extends StatelessWidget {
                     flex: 7,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
-                      child: ListView.builder(
+                      child: Obx(() => ListView.builder(
                         physics: const ClampingScrollPhysics(),
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
-                        itemCount: 4,
+                        itemCount: contactDetailController.momentList.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return const Card(
-                            child: Center(child: Text("Test a card")),
-                          );
-                        },)
+                          return ContactMomentTile(contactDetailController.momentList[index]);
+                        },))
                     ),
                   ),
                   const Expanded(

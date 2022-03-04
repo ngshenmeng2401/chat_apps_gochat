@@ -290,7 +290,6 @@ class MomentTile extends StatelessWidget {
                                       onChanged: (value) {
                                         momentsController.checkTextField();
                                       },
-                                      keyboardType: TextInputType.emailAddress,
                                       controller: momentsController.commentController,
                                       decoration: InputDecoration.collapsed(
                                         hintText: "Comment".tr,

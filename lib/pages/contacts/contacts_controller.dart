@@ -1,8 +1,10 @@
 import 'package:chat_apps_gochat/model/friend_model.dart';
 import 'package:chat_apps_gochat/model/friend_request_model.dart';
-import 'package:chat_apps_gochat/pages/contacts/contact_details.dart';
+import 'package:chat_apps_gochat/model/moments_model.dart';
+import 'package:chat_apps_gochat/pages/contacts/contact_details/contact_details.dart';
 import 'package:chat_apps_gochat/routes/app_pages.dart';
 import 'package:chat_apps_gochat/services/friend_remote_service.dart';
+import 'package:chat_apps_gochat/services/moment_remote_service.dart';
 import 'package:chat_apps_gochat/services/request_remote_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +16,8 @@ class ContactsController extends GetxController{
 
   var requestList = <FriendRequest>[].obs;
   var friendList = <Friend>[].obs;
+  var momentList = <Moment>[].obs;
+  
   late String email;
   var isLoading = true.obs;
   var isSearching = false.obs;
@@ -25,6 +29,7 @@ class ContactsController extends GetxController{
   void onInit() {
     loadFriendList();
     loadFriendRequest();
+    loadMomentList();
     super.onInit();
   }
 
@@ -59,6 +64,20 @@ class ContactsController extends GetxController{
       statusMsj("No any friend request".tr);
     }
     
+  }
+
+  void loadMomentList() async{
+
+    email = appData.read("keepLogin")??'';
+
+    
+    var moment = await MomentRemoteServices.fetchMoment(email);
+    if (moment != null) {
+      momentList.clear();
+      momentList.assignAll(moment);
+    } else {
+      statusMsj("No any post".tr);
+    }
   }
   
   late TextEditingController searchPhoneController = TextEditingController();
@@ -103,6 +122,8 @@ class ContactsController extends GetxController{
 
   void navigateContactDetails(Friend friend){
 
+    print(friend.friendEmail);
+    appData.write("friendEmail", friend.friendEmail);
     Get.to(() => ContactDetailsView(friend));
   }
 }
