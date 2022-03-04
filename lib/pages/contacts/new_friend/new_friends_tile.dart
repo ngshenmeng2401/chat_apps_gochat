@@ -50,17 +50,27 @@ class NewFriendsTile extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 2,
-                  child: MaterialButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    color: Colors.blue,
-                    onPressed: (){
-                      newFriendController.navigateAddUserView(contacts);
-                    },
-                    child: const Text("Add",
-                      style: TextStyle(color: Colors.white)),
-                  )
+                  child: contacts.action == "added"
+                  ? MaterialButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      color: Colors.blue,
+                      onPressed: null,
+                      child: const Text("Added",
+                        style: TextStyle(color: Colors.white)),
+                    )
+                  : MaterialButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      color: Colors.blue,
+                      onPressed: (){
+                        newFriendController.navigateAddUserView(contacts);
+                      },
+                      child: const Text("Add",
+                        style: TextStyle(color: Colors.white)),
+                    )
                 ),
               ],
             ),

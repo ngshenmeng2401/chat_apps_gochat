@@ -171,13 +171,17 @@ class UserRemoteServices{
     }
   }
   
-  static Future<List<Contacts>?> searchUser(String phoneNo) async {
+  static Future<List<Contacts>?> searchUser(String phoneNo, String email) async {
+
+    print(phoneNo);
+    print(email);
 
     var response =
       await client.post(
         Uri.parse(
           "https://javathree99.com/s271059/gochat/php/search_user.php"),
       body: {
+        "email":email,
         "phoneNo":phoneNo,
       });
       if (response.statusCode == 200) {

@@ -1,4 +1,5 @@
 import 'package:chat_apps_gochat/model/contacts_model.dart';
+import 'package:chat_apps_gochat/model/user_model.dart';
 import 'package:chat_apps_gochat/pages/contacts/new_friend/request_view.dart';
 import 'package:chat_apps_gochat/services/request_remote_services.dart';
 import 'package:chat_apps_gochat/services/user_remote_service.dart';
@@ -9,18 +10,24 @@ import 'package:get_storage/get_storage.dart';
 class NewFriendController extends GetxController{
 
   final appData = GetStorage();
+  late String email;
+
+  var contactList = <Contacts>[].obs;
+  var userDetails = <User>[].obs;
+
   var isSearching = false.obs;
   var isTyping = false.obs;
   var searchResult = false.obs;
-  var contactList = <Contacts>[].obs;
   var isLoading = true.obs;
   var statusMsj = "Loading".obs;
+  var phoneNo = "".obs;
   
   late TextEditingController searchPhoneController = TextEditingController();
   late TextEditingController requestController = TextEditingController()..text = "Hi, I am";
 
   @override
   void onInit() {
+    loadUser();
     loadSearchPage();
     super.onInit();
   }
@@ -39,26 +46,54 @@ class NewFriendController extends GetxController{
 
   Future<void> searchUser() async {
 
-    String phoneNo = searchPhoneController.text.toString();
-    print(phoneNo);
+    String searchPhoneNo = searchPhoneController.text.toString();
+    email = appData.read("keepLogin")??'';
     contactList.clear();
-    try {
-      isLoading(true);
-      var contact = await UserRemoteServices.searchUser(phoneNo);
-      if (contact != null) {
-        contactList.assignAll(contact);
-        searchResult.value = true;
-      } else {
-        // productList = null;
-        searchResult.value = false;
-        statusMsj("Not Found".tr);
+
+    print(phoneNo);
+
+    if(searchPhoneNo == phoneNo.value){
+      Get.snackbar(
+        "Error","Can't search own phone no",
+        backgroundColor: Colors.white60,
+        colorText: Colors.black,
+        icon: const Icon(Icons.error, color: Colors.black),
+        snackPosition: SnackPosition.TOP,  
+      );
+    }else{
+
+      try {
+        isLoading(true);
+        var contact = await UserRemoteServices.searchUser(searchPhoneNo, email);
+        if (contact != null) {
+          contactList.assignAll(contact);
+          searchResult.value = true;
+        } else {
+          // productList = null;
+          searchResult.value = false;
+          statusMsj("Not Found".tr);
+        }
+      } finally {
+        isLoading(false);
       }
-    } finally {
-      isLoading(false);
     }
 
     isTyping.value = false;
     searchPhoneController.clear();
+  }
+
+  Future<String> loadUser() async{
+
+    email = appData.read("keepLogin")??'';
+
+    var user = await UserRemoteServices.fetchUser(email);
+    if (user != null) {
+      userDetails.assignAll(user);
+      phoneNo.value = userDetails[0].phoneNo!;
+    } else {
+      statusMsj("No_data".tr);
+    }
+    return phoneNo.value;
   }
 
   void isSearchingContact(bool searching){
