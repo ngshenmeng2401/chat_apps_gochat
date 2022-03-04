@@ -1,4 +1,4 @@
-class ChatsModel{
+class ChatRoomModel{
 
   late String? username;
   late String? img;
@@ -6,7 +6,7 @@ class ChatsModel{
   late String? time;
   late bool? mute;
 
-  ChatsModel({
+  ChatRoomModel({
     
     this.username,
     this.img,
@@ -14,5 +14,23 @@ class ChatsModel{
     this.time,
     this.mute,
     
+  });
+}
+
+class ChatRecordModel{
+
+  late String? username;
+  late String? img;
+  late String? imgStatus;
+  late String? message;
+  late String? time;
+
+  ChatRecordModel({
+    
+    this.username,
+    this.img,
+    this.imgStatus,
+    this.message,
+    this.time,    
   });
 }

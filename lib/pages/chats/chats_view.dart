@@ -1,4 +1,4 @@
-import 'package:chat_apps_gochat/pages/chats/chat_tile.dart';
+import 'package:chat_apps_gochat/pages/chats/chat_room_tile.dart';
 import 'package:chat_apps_gochat/pages/chats/chats_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,9 +25,9 @@ class ChatsView extends StatelessWidget {
             Container(
               height: screenHeight/1.1,
               child: ListView.builder(
-                itemCount: chatController.chatModel.length,
+                itemCount: chatController.chatRoomModel.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return ChatTile(index, chatController.chatModel[index]);
+                  return ChatRoomTile(index, chatController.chatRoomModel[index]);
                 },
               ),
             )

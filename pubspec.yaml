@@ -30,6 +30,7 @@ dependencies:
   animated_text_kit: ^4.2.1
   badges: ^2.0.2
   cupertino_icons: ^1.0.4
+  emoji_picker_flutter: ^1.1.2
   flutter:
     sdk: flutter
   flutter_image_compress: ^1.1.0
