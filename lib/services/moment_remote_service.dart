@@ -1,4 +1,5 @@
 import 'package:chat_apps_gochat/model/comment_model.dart';
+import 'package:chat_apps_gochat/model/like_model.dart';
 import 'package:chat_apps_gochat/model/moments_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -58,6 +59,30 @@ class MomentRemoteServices{
       }
   }
 
+  static Future<List<Like>?> fetchLikes(String email) async {
+
+    var response =
+      await client.post(
+        Uri.parse(
+          "https://javathree99.com/s271059/gochat/php/load_likes.php"),
+      body: {
+        "email":email,
+      });
+      if (response.statusCode == 200) {
+        if (response.body == "nodata") {
+          return null;
+        } else {
+          var jsonString = response.body;
+          // print("IN remoteservices" + jsonString);
+          return likeFromJson(jsonString);
+        }
+      } else {
+        //show error message
+        // return null;
+        throw Exception('Failed to load Categories from API');
+      }
+  }
+
   static Future<String?> addComment(String postId, String email , String comment) async {
     
     print(postId);
@@ -108,6 +133,58 @@ class MomentRemoteServices{
     } else {
       // show error message
       getSnackBar("Delete Failed", "Please check your input value.");
+      return null;
+    }
+  }
+
+  static Future<String?> likePost(String postId, String email) async {
+    
+    print(postId);
+    print(email);
+
+    var response = await client.post(
+
+      Uri.parse('https://javathree99.com/s271059/gochat/php/like_post.php'), 
+      body: {
+      "postId" : postId,
+      "email" : email,
+    });
+    print(response.body);
+    if (response.body == "success") {
+      var resp = response.body;
+      
+      getSnackBar("Like Successful", "");
+
+      return resp;
+    } else {
+      // show error message
+      getSnackBar("Like Failed", "");
+      return null;
+    }
+  }
+
+  static Future<String?> unlikePost(String postId, String email) async {
+    
+    print(postId);
+    print(email);
+
+    var response = await client.post(
+
+      Uri.parse('https://javathree99.com/s271059/gochat/php/unlike_post.php'), 
+      body: {
+      "postId" : postId,
+      "email" : email,
+    });
+    print(response.body);
+    if (response.body == "success") {
+      var resp = response.body;
+      
+      getSnackBar("Unlike Successful", "");
+
+      return resp;
+    } else {
+      // show error message
+      getSnackBar("Unlike Failed", "");
       return null;
     }
   }

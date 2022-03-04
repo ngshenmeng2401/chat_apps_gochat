@@ -1,4 +1,5 @@
 import 'package:chat_apps_gochat/model/comment_model.dart';
+import 'package:chat_apps_gochat/model/like_model.dart';
 import 'package:chat_apps_gochat/model/moments_model.dart';
 import 'package:chat_apps_gochat/model/user_model.dart';
 import 'package:chat_apps_gochat/services/moment_remote_service.dart';
@@ -16,26 +17,47 @@ class MomentsController extends GetxController{
   var momentList = <Moment>[].obs;
   var userDetails = <User>[].obs;
   var commentList = <Comment>[].obs;
+  var likeList = <Like>[].obs;
 
   late TextEditingController commentController = TextEditingController();
   late String email;
 
   var phoneNo = "".obs;
   var isLoading = true.obs;
-  var statusMsj = "Loading".obs;
+  var statusMsj = "".obs;
   var optionList = [].obs;
-  var optionBox = false.obs;
   var commentBoxList = [].obs;
+  var commentOptionList = [].obs;
   var isComment = false.obs;
   var isTyping = false.obs;
-  var commentOptionList = [].obs;
   var text = ''.obs;
+  var likesNum;
+
+  final likeModel = <LikeModel>[
+
+    LikeModel(
+      likeId: "1",
+      username: "Jimmy Tan",
+      postId: "5",
+    ),
+    LikeModel(
+      likeId: "2",
+      username: "Meng",
+      postId: "5",
+    ),
+    LikeModel(
+      likeId: "3",
+      username: "Star",
+      postId: "5",
+    ),
+  ];
 
   @override
   void onInit() {
     loadMomentList();
     loadUser();
     loadCommentList();
+    loadLikeList();
     super.onInit();
   }
 
@@ -52,6 +74,8 @@ class MomentsController extends GetxController{
 
         optionList.insert(i, false);
         commentBoxList.insert(i, false);
+
+        likesNum =  int.parse(momentList[i].likes!) - 2;
       }
     } else {
       statusMsj("No any post".tr);
@@ -73,6 +97,20 @@ class MomentsController extends GetxController{
       }
     } else {
       statusMsj("No any comment".tr);
+    }
+  }
+
+  void loadLikeList() async{
+
+    email = appData.read("keepLogin")??'';
+
+    var like = await MomentRemoteServices.fetchLikes(email);
+    if (like != null) {
+      // likeList.clear();
+      likeList.assignAll(like);
+      print(likeList.length);
+    } else {
+      statusMsj("No any like".tr);
     }
   }
 
@@ -98,7 +136,7 @@ class MomentsController extends GetxController{
   }
 
   void displayCommentBox(bool comment, int index){
-    // print(comment);
+    
     if(comment == false){
 
       commentBoxList[index] = true;
@@ -111,13 +149,9 @@ class MomentsController extends GetxController{
 
   void displayCommentOption(bool commentOption, int index){
 
-    if(commentOption == false){
-
-      commentOptionList[index] = true;
-
-    }else{
-      commentOptionList[index] = false;
-    }
+    commentOption == false
+      ? commentOptionList[index] = true
+      : commentOptionList[index] = false;
   }
 
   void closeCommentBox(int index){
@@ -130,6 +164,22 @@ class MomentsController extends GetxController{
     commentController.text.isEmpty
       ? isTyping.value = false
       : isTyping.value = true;
+  }
+
+  void toggleLikeButton(String action, String postId){
+
+    email = appData.read("keepLogin")??'';
+
+    action == "like"
+
+    ? MomentRemoteServices.likePost(postId, email)
+
+    : MomentRemoteServices.unlikePost(postId, email);
+
+    Future.delayed(const Duration(milliseconds: 500), () {
+      loadMomentList();
+      loadLikeList();
+    });
   }
 
   void sendCommentPost(String postId,int index){

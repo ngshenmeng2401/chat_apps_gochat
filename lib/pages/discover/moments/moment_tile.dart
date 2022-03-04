@@ -1,5 +1,6 @@
 import 'package:chat_apps_gochat/model/moments_model.dart';
 import 'package:chat_apps_gochat/pages/discover/moments/comment_tile.dart';
+import 'package:chat_apps_gochat/pages/discover/moments/like_tile.dart';
 import 'package:chat_apps_gochat/pages/discover/moments/moment_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -141,25 +142,41 @@ class MomentTile extends StatelessWidget {
                 children: [
                   Obx(() => momentsController.optionList[index] == true
                     ? Container(
+                        padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           color: Colors.grey[350],
                         ),
-                        width: screenWidth/3,
+                        width: screenWidth/2.8,
                         height: 30,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            GestureDetector(
-                              onTap: (){},
-                              child: Row(
-                                children: const [
-                                  Icon(Icons.favorite_border_outlined,
-                                    size: 20,),
-                                  Text(" Like"),
-                                ],
-                              ),
-                            ),
+                            moment.likeaction == "unlike"
+                              ? GestureDetector(
+                                  onTap: (){
+                                    momentsController.toggleLikeButton("like", moment.postId!);
+                                  },
+                                  child: Row(
+                                    children: const [
+                                      Icon(Icons.favorite_border_outlined,
+                                        size: 20,),
+                                      Text(" Like"),
+                                    ],
+                                  ),
+                                )
+                              : GestureDetector(
+                                  onTap: (){
+                                    momentsController.toggleLikeButton("unlike", moment.postId!);
+                                  },
+                                  child: Row(
+                                    children: const [
+                                      Icon(Icons.favorite_border_outlined,
+                                        size: 20,),
+                                      Text(" Cancel"),
+                                    ],
+                                  ),
+                                ),
                             GestureDetector(
                               onTap: (){
                                 momentsController.displayCommentBox(comment, index);
@@ -213,7 +230,40 @@ class MomentTile extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Container(
+                        color: Colors.grey[200],
+                        padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                        height: 20,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Icon(Icons.favorite_outline,
+                              size: 15,),
+                            const SizedBox(width: 5,),
+                            Obx(() {
+                              if(momentsController.likeList.isEmpty){
+                                return Container();
+                              }else{
+                                return ListView.builder(
+                                  primary: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: momentsController.likeList.length, 
+                                  itemBuilder: (BuildContext context, int index) {
+                                    return LikeTile(index, momentsController.likeList[index],moment.postId!);
+                                  },
+                                );
+                              }
+                            }),
+                            momentsController.likesNum > 2
+                            ? Text(" and ${momentsController.likesNum} others")
+                            : const Text(""),
+                          ],
+                        ),
+                      ),
                       LimitedBox(
                         child: Obx(() {
                           return ListView.builder(
