@@ -2,6 +2,7 @@ import 'package:chat_apps_gochat/model/comment_model.dart';
 import 'package:chat_apps_gochat/model/like_model.dart';
 import 'package:chat_apps_gochat/model/moments_model.dart';
 import 'package:chat_apps_gochat/model/user_model.dart';
+import 'package:chat_apps_gochat/pages/discover/moments/like_tile.dart';
 import 'package:chat_apps_gochat/services/moment_remote_service.dart';
 import 'package:chat_apps_gochat/services/post_remote_service.dart';
 import 'package:chat_apps_gochat/services/user_remote_service.dart';
@@ -33,25 +34,6 @@ class MomentsController extends GetxController{
   var text = ''.obs;
   var likesNum;
 
-  final likeModel = <LikeModel>[
-
-    LikeModel(
-      likeId: "1",
-      username: "Jimmy Tan",
-      postId: "5",
-    ),
-    LikeModel(
-      likeId: "2",
-      username: "Meng",
-      postId: "5",
-    ),
-    LikeModel(
-      likeId: "3",
-      username: "Star",
-      postId: "5",
-    ),
-  ];
-
   @override
   void onInit() {
     loadMomentList();
@@ -74,8 +56,7 @@ class MomentsController extends GetxController{
 
         optionList.insert(i, false);
         commentBoxList.insert(i, false);
-
-        likesNum =  int.parse(momentList[i].likes!) - 2;
+        print(momentList[i].likes);
       }
     } else {
       statusMsj("No any post".tr);
@@ -106,9 +87,9 @@ class MomentsController extends GetxController{
 
     var like = await MomentRemoteServices.fetchLikes(email);
     if (like != null) {
-      // likeList.clear();
+      likeList.clear();
       likeList.assignAll(like);
-      print(likeList.length);
+      // print(likeList.length);
     } else {
       statusMsj("No any like".tr);
     }
@@ -224,6 +205,35 @@ class MomentsController extends GetxController{
           loadMomentList();
         }),
       },
+      cancelTextColor: Colors.black,
+      confirmTextColor: Colors.white,
+      buttonColor: Colors.black,
+    );
+  }
+
+  void displayLikeList(double screenHeight, double screenWidth, String postId){
+
+    Get.defaultDialog(
+      title: "Likes".tr,
+      content: Column(
+        children: [
+          Container(
+            width: screenWidth/1.6,
+            height: screenHeight/3.5,
+            child: ListView.builder(
+                  primary: true,
+                  shrinkWrap: true,
+                  itemCount: likeList.length, 
+                  itemBuilder: (BuildContext context, int index) {
+                    return LikeTile(index, postId, likeList[index]);
+                  },
+                )
+              
+          ),
+        ],
+      ),
+      textCancel: "Close".tr,
+      onConfirm: null,
       cancelTextColor: Colors.black,
       confirmTextColor: Colors.white,
       buttonColor: Colors.black,

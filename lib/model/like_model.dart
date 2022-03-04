@@ -18,6 +18,7 @@ class Like {
         this.content,
         this.username,
         this.phoneNo,
+        this.profileImg,
     });
 
     String? writerEmail;
@@ -28,6 +29,7 @@ class Like {
     String? content;
     String? username;
     String? phoneNo;
+    String? profileImg;
 
     factory Like.fromJson(Map<String, dynamic> json) => Like(
         writerEmail: json["writerEmail"],
@@ -38,6 +40,7 @@ class Like {
         content: json["content"],
         username: json["username"],
         phoneNo: json["phone_no"],
+        profileImg: json["profile_img"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -49,20 +52,6 @@ class Like {
         "content": content,
         "username": username,
         "phone_no": phoneNo,
+        "profile_img": profileImg,
     };
-}
-
-
-
-class LikeModel{
-
-  late String? likeId;
-  late String? username;
-  late String? postId;
-
-  LikeModel({
-    this.likeId,
-    this.username,
-    this.postId,
-  });
 }

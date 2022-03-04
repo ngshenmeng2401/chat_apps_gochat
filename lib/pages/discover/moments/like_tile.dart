@@ -8,17 +8,36 @@ class LikeTile extends StatelessWidget {
   final Like like;
   final int index;
   final String postId;
-  LikeTile(this.index, this.like, this.postId, {Key? key}) : super(key: key);
+  LikeTile(this.index, this.postId, this.like, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
-      child: postId == like.postId 
+      padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+      margin: const EdgeInsets.fromLTRB(0, 0, 0, 3),
+      child: 
+      postId == like.postId 
       ? Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(index.toString()),
-            // Text(like.username! + ","),
-            const SizedBox(width:5),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(5),
+              child: 
+              like.profileImg == "noimage"
+              ? 
+              Image.asset("assets/images/p1.png",
+                height: screenHeight/20,
+                fit: BoxFit.contain,)
+              : Image.network("https://javathree99.com/s271059/gochat/images/user_profile/${like.phoneNo}.png",
+                height: screenHeight/20,),
+            ),
+            const SizedBox(width: 20),
+            Text(like.username!,
+              overflow: TextOverflow.ellipsis,),
           ],
         )
       : Container()

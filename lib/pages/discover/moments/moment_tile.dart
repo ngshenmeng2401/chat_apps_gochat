@@ -1,6 +1,5 @@
 import 'package:chat_apps_gochat/model/moments_model.dart';
 import 'package:chat_apps_gochat/pages/discover/moments/comment_tile.dart';
-import 'package:chat_apps_gochat/pages/discover/moments/like_tile.dart';
 import 'package:chat_apps_gochat/pages/discover/moments/moment_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -232,36 +231,25 @@ class MomentTile extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        color: Colors.grey[200],
-                        padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                        height: 20,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Icon(Icons.favorite_outline,
-                              size: 15,),
-                            const SizedBox(width: 5,),
-                            Obx(() {
-                              if(momentsController.likeList.isEmpty){
-                                return Container();
-                              }else{
-                                return ListView.builder(
-                                  primary: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: momentsController.likeList.length, 
-                                  itemBuilder: (BuildContext context, int index) {
-                                    return LikeTile(index, momentsController.likeList[index],moment.postId!);
-                                  },
-                                );
-                              }
-                            }),
-                            momentsController.likesNum > 2
-                            ? Text(" and ${momentsController.likesNum} others")
-                            : const Text(""),
-                          ],
+                      GestureDetector(
+                        onTap: (){
+                          momentsController.displayLikeList(screenHeight, screenWidth, moment.postId!);
+                        },
+                        child: Container(
+                          color: Colors.grey[200],
+                          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                          height: 20,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const Icon(Icons.favorite_outline,
+                                size: 15,),
+                              const SizedBox(width: 5,),
+                              int.parse(moment.likes!) > 0
+                              ? Text(moment.likes!)
+                              : const Text(""),
+                            ],
+                          ),
                         ),
                       ),
                       LimitedBox(
