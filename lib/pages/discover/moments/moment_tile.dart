@@ -18,7 +18,9 @@ class MomentTile extends StatelessWidget {
 
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    String datePosted = DateFormat('dd MMM yyyy HH:mm').format(moment.datePost!);
+    String datePosted = DateFormat('dd-MMM-yyyy HH:mm').format(moment.datePost!);
+    // DateTime time = DateTime.parse(datePosted);
+    Duration diff = DateTime.now().difference(moment.datePost!);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -115,22 +117,35 @@ class MomentTile extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
                 child: Row(
                   children: [
-                    Text(datePosted),
-                      const SizedBox(width: 10),
-                      Obx(() => 
-                      moment.phoneNo == momentsController.phoneNo.value
-                        ? GestureDetector(
-                            onTap: (){
-                              momentsController.deletePost(moment.postId!, moment.momentImg!);
-                            },
-                            child: Text("Delete",
-                              style: TextStyle(
-                                color: Colors.blue[700],
-                                decoration: TextDecoration.underline,
-                              ),),
-                          )
-                        : Container()
-                      ),
+                    Text(((){
+                      if (diff.inDays >= 1){
+                        return "${diff.inDays} day(s) ago";
+                      }else if (diff.inHours >= 1){
+                        return "${diff.inHours} hour(s) ago";
+                      }else if (diff.inMinutes  >= 1){
+                        return "${diff.inMinutes } minutes(s) ago";
+                      }else if (diff.inSeconds  >= 1){
+                        return "${diff.inSeconds } second(s) ago";
+                      }else{
+                        return "just now";
+                      }
+                    }()),),
+                    // Text(datePosted),
+                    const SizedBox(width: 10),
+                    Obx(() => 
+                    moment.phoneNo == momentsController.phoneNo.value
+                      ? GestureDetector(
+                          onTap: (){
+                            momentsController.deletePost(moment.postId!, moment.momentImg!);
+                          },
+                          child: Text("Delete",
+                            style: TextStyle(
+                              color: Colors.blue[700],
+                              decoration: TextDecoration.underline,
+                            ),),
+                        )
+                      : Container()
+                    ),
                   ],
                 ),
               ),),

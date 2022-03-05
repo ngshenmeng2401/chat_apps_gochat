@@ -1,15 +1,22 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:chat_apps_gochat/model/comment_model.dart';
 import 'package:chat_apps_gochat/model/like_model.dart';
 import 'package:chat_apps_gochat/model/moments_model.dart';
 import 'package:chat_apps_gochat/model/user_model.dart';
 import 'package:chat_apps_gochat/pages/discover/moments/like_tile.dart';
+import 'package:chat_apps_gochat/routes/app_pages.dart';
 import 'package:chat_apps_gochat/services/moment_remote_service.dart';
 import 'package:chat_apps_gochat/services/post_remote_service.dart';
 import 'package:chat_apps_gochat/services/user_remote_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 class MomentsController extends GetxController{
@@ -21,7 +28,9 @@ class MomentsController extends GetxController{
   var likeList = <Like>[].obs;
 
   late TextEditingController commentController = TextEditingController();
+  late TextEditingController contentController = TextEditingController();
   late String email;
+  late String base64Image = "";
 
   var phoneNo = "".obs;
   var isLoading = true.obs;
@@ -33,6 +42,17 @@ class MomentsController extends GetxController{
   var isTyping = false.obs;
   var text = ''.obs;
   var likesNum;
+
+  var selectedImagePath = ''.obs;
+  var selectedImageSize = ''.obs;
+
+  // Crop code
+  var cropImagePath = ''.obs;
+  var cropImageSize = ''.obs;
+
+  // Compress code
+  var compressImagePath = ''.obs;
+  var compressImageSize = ''.obs;
 
   @override
   void onInit() {
@@ -56,7 +76,7 @@ class MomentsController extends GetxController{
 
         optionList.insert(i, false);
         commentBoxList.insert(i, false);
-        print(momentList[i].likes);
+        // print(momentList[i].likes);
       }
     } else {
       statusMsj("No any post".tr);
@@ -107,6 +127,13 @@ class MomentsController extends GetxController{
       statusMsj("No_data".tr);
     }
     return phoneNo.value;
+  }
+
+  void loadAllList() {
+    loadMomentList();
+    loadCommentList();
+    loadLikeList();
+    loadUser();
   }
 
   void displayLikeComment(bool option, int index){
@@ -240,6 +267,131 @@ class MomentsController extends GetxController{
     );
   }
 
+  Future<void> getImage(ImageSource imageSource) async {
+
+    final pickedFile = await ImagePicker().pickImage(source: imageSource);
+
+    if (pickedFile != null){
+
+      selectedImagePath.value = pickedFile.path;
+      selectedImageSize.value = ((File(selectedImagePath.value)).lengthSync() / 1024 /1024).toStringAsFixed(2) + " MB";
+
+      final cropImageFile = await ImageCropper().cropImage(
+
+        sourcePath: selectedImagePath.value,
+        maxWidth: 512,
+        maxHeight: 512,
+        compressFormat: ImageCompressFormat.jpg,
+        aspectRatioPresets: [
+          CropAspectRatioPreset.ratio4x3,
+          CropAspectRatioPreset.ratio16x9,
+          CropAspectRatioPreset.square,
+          CropAspectRatioPreset.original
+        ]
+      );
+
+      // Crop
+      cropImagePath.value = cropImageFile!.path;
+      cropImageSize.value = ((File(cropImagePath.value)).lengthSync() / 1024 / 1024).toStringAsFixed(2) + " MB";
+
+      //Compress
+      final dir = Directory.systemTemp;
+      final targetPath = dir.absolute.path + "/temp.jpg";
+
+      var compressedFile = await FlutterImageCompress.compressAndGetFile(
+
+        cropImagePath.value,
+        targetPath,
+        quality: 90,
+      );
+
+      compressImagePath.value = compressedFile!.path;
+
+      compressImageSize.value = ((File(compressImagePath.value)).lengthSync() / 1024 / 1024).toStringAsFixed(2) + " MB";
+
+      base64Image = base64Encode(compressedFile.readAsBytesSync());
+
+    }else{
+
+      Get.snackbar("Error", "No image selected",
+        backgroundColor: Colors.white60,
+        colorText: Colors.black,
+        icon: const Icon(Icons.error, color: Colors.black),
+        snackPosition: SnackPosition.TOP,
+      );
+    }
+  }
+
+  void addPostWithPic(String base64Image){
+
+    email = appData.read("keepLogin")??'';
+    String content = contentController.text.toString();
+
+    if(base64Image.isEmpty && content.isEmpty){
+
+      Get.snackbar("Error", "Please write content and select a photo.",
+        backgroundColor: Colors.white60,
+        colorText: Colors.black,
+        icon: const Icon(Icons.error, color: Colors.black),
+        snackPosition: SnackPosition.TOP,
+      );
+
+    }else if(base64Image.isEmpty){
+
+      Get.snackbar("Error", "Please select a photo.",
+        backgroundColor: Colors.white60,
+        colorText: Colors.black,
+        icon: const Icon(Icons.error, color: Colors.black),
+        snackPosition: SnackPosition.TOP,
+      );
+
+    }else if(content.isEmpty){
+      
+      Get.snackbar("Error", "Please write content.",
+        backgroundColor: Colors.white60,
+        colorText: Colors.black,
+        icon: const Icon(Icons.error, color: Colors.black),
+        snackPosition: SnackPosition.TOP,
+      );
+
+    }else{
+
+      momentList.clear();
+      PostRemoteServices.addPost(email, base64Image, content, "withPic");
+      Get.back();
+      Future.delayed(const Duration(seconds: 1), () {
+        loadMomentList();
+      });
+      
+    }
+  }
+
+  void addPostWithoutPic(){
+
+    email = appData.read("keepLogin")??'';
+    String content = contentController.text.toString();
+
+    if(content.isEmpty){
+      
+      Get.snackbar("Error", "Please write content.",
+        backgroundColor: Colors.white60,
+        colorText: Colors.black,
+        icon: const Icon(Icons.error, color: Colors.black),
+        snackPosition: SnackPosition.TOP,
+      );
+
+    }else{
+
+      momentList.clear();
+      PostRemoteServices.addPost(email, "a", content, "withoutPic");
+      Get.back();
+      Future.delayed(const Duration(seconds: 1), () {
+        loadMomentList();
+      });
+      // loadPost();
+    }
+  }
+
   copyText(String text) {
     Clipboard.setData(ClipboardData(text: text));
   }
@@ -248,5 +400,13 @@ class MomentsController extends GetxController{
     ClipboardData? clipborad = await Clipboard.getData('text/plain');
     text.value = clipborad!.text!;
     commentController.text = text.value;
+  }
+
+  void navigatePostWithPic(){
+    Get.toNamed(AppRoutes.MomentWithPicPage)!.then((value) => loadMomentList());
+  }
+
+  void navigatePostWithoutPic(){
+    Get.toNamed(AppRoutes.MomentWithoutPicPage)!.then((value) => loadMomentList());
   }
 }

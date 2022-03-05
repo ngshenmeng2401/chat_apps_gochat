@@ -4,6 +4,8 @@ import 'package:chat_apps_gochat/pages/contacts/new_friend/request_view.dart';
 import 'package:chat_apps_gochat/pages/contacts/new_friend/new_friend_view.dart';
 import 'package:chat_apps_gochat/pages/contacts/new_request/new_request_view.dart';
 import 'package:chat_apps_gochat/pages/discover/discover_view.dart';
+import 'package:chat_apps_gochat/pages/discover/moments/moment_with_pic.dart';
+import 'package:chat_apps_gochat/pages/discover/moments/moment_without_pic.dart';
 import 'package:chat_apps_gochat/pages/discover/moments/moments_view.dart';
 import 'package:chat_apps_gochat/pages/login/login_binding.dart';
 import 'package:chat_apps_gochat/pages/login/login_view.dart';
@@ -85,6 +87,15 @@ class AppPages{
       page: () => MomentsView(),
     ),
 
+    GetPage(
+      name: AppRoutes.MomentWithPicPage,
+      page: () => MomentWithPicView(),
+    ),
+
+    GetPage(
+      name: AppRoutes.MomentWithoutPicPage,
+      page: () => MomentWithoutPicView(),
+    ),
 
     //Me
     GetPage(

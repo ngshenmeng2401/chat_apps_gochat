@@ -19,6 +19,8 @@ abstract class AppRoutes{
   //Discover
   static const DiscoverPage = '/discoverpage';
   static const MomentPage = '/momentpage';
+  static const MomentWithoutPicPage = '/momentwithoutpicpage';
+  static const MomentWithPicPage = '/momentwithpicpage';
 
   //Me
   static const MePage = '/mepage';

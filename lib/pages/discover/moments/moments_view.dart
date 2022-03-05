@@ -18,6 +18,18 @@ class MomentsView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Moments"),
+        actions: [
+          IconButton(
+            onPressed: (){
+              momentsController.navigatePostWithPic();
+            }, 
+            icon: const Icon(Icons.camera_alt)),
+          IconButton(
+            onPressed: (){
+              momentsController.navigatePostWithoutPic();
+            }, 
+            icon: const Icon(Icons.text_fields)),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
