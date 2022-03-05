@@ -4,6 +4,7 @@ import 'package:chat_apps_gochat/pages/discover/moments/moment_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class MomentTile extends StatelessWidget {
   
@@ -18,9 +19,7 @@ class MomentTile extends StatelessWidget {
 
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
-    String datePosted = DateFormat('dd-MMM-yyyy HH:mm').format(moment.datePost!);
-    // DateTime time = DateTime.parse(datePosted);
-    Duration diff = DateTime.now().difference(moment.datePost!);
+    String datePosted = DateFormat('yyyy-MM-dd HH:mm:ss').format(moment.datePost!);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -117,20 +116,7 @@ class MomentTile extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
                 child: Row(
                   children: [
-                    Text(((){
-                      if (diff.inDays >= 1){
-                        return "${diff.inDays} day(s) ago";
-                      }else if (diff.inHours >= 1){
-                        return "${diff.inHours} hour(s) ago";
-                      }else if (diff.inMinutes  >= 1){
-                        return "${diff.inMinutes } minutes(s) ago";
-                      }else if (diff.inSeconds  >= 1){
-                        return "${diff.inSeconds } second(s) ago";
-                      }else{
-                        return "just now";
-                      }
-                    }()),),
-                    // Text(datePosted),
+                    Text(timeago.format(DateTime.parse(datePosted))),
                     const SizedBox(width: 10),
                     Obx(() => 
                     moment.phoneNo == momentsController.phoneNo.value

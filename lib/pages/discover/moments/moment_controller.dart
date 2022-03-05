@@ -41,7 +41,6 @@ class MomentsController extends GetxController{
   var isComment = false.obs;
   var isTyping = false.obs;
   var text = ''.obs;
-  var likesNum;
 
   var selectedImagePath = ''.obs;
   var selectedImageSize = ''.obs;
