@@ -1,14 +1,14 @@
-import 'package:chat_apps_gochat/model/chat_model.dart';
-import 'package:chat_apps_gochat/pages/chats/chats_controller.dart';
+import 'package:chat_apps_gochat/model/chatroom_model.dart';
+import 'package:chat_apps_gochat/pages/chatroom/chats_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChatRoomTile extends StatelessWidget {
 
   final chatController = Get.put(ChatsController());
-  final ChatRoomModel chatsRoomModel;
+  final Chatroom chatroom;
   final int index;
-  ChatRoomTile(this.index, this.chatsRoomModel, {Key? key}) : super(key: key);
+  ChatRoomTile(this.index, this.chatroom, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class ChatRoomTile extends StatelessWidget {
       children: [
         InkWell(
           onTap: (){
-            chatController.navigateChatRecordView(chatsRoomModel);
+            chatController.navigateChatRecordView(chatroom);
           },
           child: Container(
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -32,10 +32,10 @@ class ChatRoomTile extends StatelessWidget {
                   child: Container(
                     color: Colors.grey[100],
                     padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
-                    child: Image.asset("${chatController.chatRoomModel[index].img}",
-                      height: screenHeight/2,
-                      width: screenWidth/1.3,
-                      fit: BoxFit.fitWidth,),
+                    child: chatroom.imgStatus == "noimage"
+                      ? Image.asset("assets/images/p1.png",
+                          fit: BoxFit.fitWidth,)
+                      : Image.network("https://javathree99.com/s271059/gochat/images/user_profile/${chatroom.phoneNo}.png")
                   )
                 ),
                 Expanded(
@@ -46,17 +46,17 @@ class ChatRoomTile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("${chatController.chatRoomModel[index].username}",
+                        Text("${chatroom.username}",
                           style: const TextStyle(
                             fontSize: 18
                           ),),
                         const SizedBox(
                           height: 5,
                         ),
-                        Text("${chatController.chatRoomModel[index].chat}",
-                          style: const TextStyle(
-                            fontSize: 14
-                          ),),
+                        // Text("${chatController.chatRoomModel[index].chat}",
+                        //   style: const TextStyle(
+                        //     fontSize: 14
+                        //   ),),
                       ],
                     ),
                   )
@@ -67,10 +67,10 @@ class ChatRoomTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text("${chatController.chatRoomModel[index].time}"),
-                      Icon(chatController.chatRoomModel[index].mute == true 
-                        ? Icons.volume_mute
-                        : null )
+                      // Text("${chatController.chatRoomModel[index].time}"),
+                      // Icon(chatController.chatRoomModel[index].mute == true 
+                      //   ? Icons.volume_mute
+                      //   : null )
                     ],
                   )
                 ),

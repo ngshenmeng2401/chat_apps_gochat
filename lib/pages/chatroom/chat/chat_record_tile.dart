@@ -1,26 +1,31 @@
 import 'package:chat_apps_gochat/model/chat_model.dart';
-import 'package:chat_apps_gochat/pages/chats/chats_controller.dart';
+import 'package:chat_apps_gochat/pages/chatroom/chat/chat_record_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class ChatRecordTile extends StatelessWidget {
   
-  final chatController = Get.put(ChatsController());
-  final ChatRecordModel chatsRecordModel;
+  final chatRecordController = Get.put(ChatRecordController());
+   final Chat chat;
   final int index;
-  ChatRecordTile(this.index, this.chatsRecordModel, {Key? key}) : super(key: key);
+  final widgetKey = GlobalKey();
+  ChatRecordTile(this.index, this.chat, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    String dateSent = DateFormat('yyyy-MM-dd HH:mm:ss').format(chat.dateSent!);
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal:20),
       child: Column(
-        crossAxisAlignment: chatsRecordModel.username == "Shen Meng" ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment: chat.phoneNo == chatRecordController.phoneNo.value ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Container(
             decoration: BoxDecoration(
               color: Colors.grey[350],
-              borderRadius: chatsRecordModel.username == "Shen Meng" 
+              borderRadius: chat.phoneNo == chatRecordController.phoneNo.value
                 ? const BorderRadius.only(
                     topLeft: Radius.circular(15),
                     topRight: Radius.circular(15),
@@ -33,7 +38,7 @@ class ChatRecordTile extends StatelessWidget {
                   )
             ),
             padding: const EdgeInsets.all(15),
-            child: Text(chatsRecordModel.message!,
+            child: Text(chat.message!,
               textAlign: TextAlign.left,
               style: const TextStyle(
                 fontSize: 16,
@@ -42,11 +47,11 @@ class ChatRecordTile extends StatelessWidget {
               )),
           ),
           const SizedBox(height: 5),
-          Text(chatsRecordModel.time!),
+          Text(dateSent),
 
         ],
       ),
-      alignment: chatsRecordModel.username == "Shen Meng" ? Alignment.centerRight : Alignment.centerLeft,
+      alignment: chat.phoneNo == chatRecordController.phoneNo.value ? Alignment.centerRight : Alignment.centerLeft,
     );
   }
 }
