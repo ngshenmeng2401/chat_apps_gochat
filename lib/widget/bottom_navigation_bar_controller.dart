@@ -1,4 +1,4 @@
-import 'package:chat_apps_gochat/pages/chats/chats_controller.dart';
+import 'package:chat_apps_gochat/pages/chatroom/chats_controller.dart';
 import 'package:chat_apps_gochat/pages/contacts/contacts_controller.dart';
 import 'package:chat_apps_gochat/pages/discover/discover_controller.dart';
 import 'package:chat_apps_gochat/pages/me/me_controller.dart';

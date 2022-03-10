@@ -1,4 +1,4 @@
-import 'package:chat_apps_gochat/pages/chats/chats_view.dart';
+import 'package:chat_apps_gochat/pages/chatroom/chats_view.dart';
 import 'package:chat_apps_gochat/pages/contacts/contact_view.dart';
 import 'package:chat_apps_gochat/pages/contacts/new_friend/request_view.dart';
 import 'package:chat_apps_gochat/pages/contacts/new_friend/new_friend_view.dart';
