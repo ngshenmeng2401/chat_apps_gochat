@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:chat_apps_gochat/model/friend_model.dart';
 import 'package:chat_apps_gochat/model/friend_request_model.dart';
 import 'package:chat_apps_gochat/pages/contacts/contact_details/contact_details.dart';
@@ -11,6 +13,7 @@ import 'package:get_storage/get_storage.dart';
 class ContactsController extends GetxController{
 
   static final appData = GetStorage();
+  late Timer? timer;
 
   var requestList = <FriendRequest>[].obs;
   var friendList = <Friend>[].obs;
@@ -26,7 +29,19 @@ class ContactsController extends GetxController{
   void onInit() {
     loadFriendList();
     loadFriendRequest();
+    // timer = Timer.periodic(const Duration(seconds: 2), (Timer t) => loadData());
     super.onInit();
+  }
+
+  @override
+  void dispose() {
+    // timer?.cancel();
+    super.dispose();
+  }
+
+  void loadData(){
+
+    print("loading data...");
   }
 
   void loadFriendList() async{

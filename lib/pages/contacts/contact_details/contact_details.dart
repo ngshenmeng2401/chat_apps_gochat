@@ -124,7 +124,7 @@ class ContactDetailsView extends StatelessWidget {
             const SizedBox(height: 15,),
             GestureDetector(
               onTap: () {
-                
+                contactDetailController.navigateChatRecordView(friend);
               },
               child: Container(
                 color: Colors.grey[100],
