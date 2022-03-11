@@ -17,41 +17,85 @@ class ChatRecordTile extends StatelessWidget {
 
     String dateSent = DateFormat('yyyy-MM-dd HH:mm:ss').format(chat.dateSent!);
 
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 15, horizontal:20),
-      child: Column(
-        crossAxisAlignment: chat.phoneNo == chatRecordController.phoneNo.value ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[350],
-              borderRadius: chat.phoneNo == chatRecordController.phoneNo.value
-                ? const BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15),
-                    bottomLeft: Radius.circular(15),
-                  )
-                : const BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15),
-                    bottomRight: Radius.circular(15),
-                  )
+    return GestureDetector(
+      key: widgetKey,
+      onLongPress: (){
+        showMenu(
+          context: context, 
+          position: _getRelativeRect(widgetKey),
+          items: chat.phoneNo == chatRecordController.phoneNo.value
+            ? <PopupMenuEntry> [
+              PopupMenuItem(
+                onTap: (){
+                  chatRecordController.copyText(chat.message!);
+                },
+                value: 1, 
+                child: const Text('Copy'),),
+              PopupMenuItem(
+                onTap: (){
+                },
+                child: const Text('Delete'),)
+            ]
+            : <PopupMenuEntry> [
+              PopupMenuItem(
+                onTap: (){
+                  chatRecordController.copyText(chat.message!);
+                },
+                value: 1, 
+                child: const Text('Copy'),),
+            ]
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal:20),
+        child: Column(
+          crossAxisAlignment: chat.phoneNo == chatRecordController.phoneNo.value ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[350],
+                borderRadius: chat.phoneNo == chatRecordController.phoneNo.value
+                  ? const BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                      bottomLeft: Radius.circular(15),
+                    )
+                  : const BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                      bottomRight: Radius.circular(15),
+                    )
+              ),
+              padding: const EdgeInsets.all(15),
+              child: Text(chat.message!,
+                textAlign: TextAlign.left,
+                style: const TextStyle(
+                  fontSize: 16,
+                  height: 1.3,
+                  color: Colors.black,
+                )),
             ),
-            padding: const EdgeInsets.all(15),
-            child: Text(chat.message!,
-              textAlign: TextAlign.left,
-              style: const TextStyle(
-                fontSize: 16,
-                height: 1.3,
-                color: Colors.black,
-              )),
-          ),
-          const SizedBox(height: 5),
-          Text(dateSent),
-
-        ],
+            const SizedBox(height: 5),
+            Text(dateSent),
+    
+          ],
+        ),
+        alignment: chat.phoneNo == chatRecordController.phoneNo.value ? Alignment.centerRight : Alignment.centerLeft,
       ),
-      alignment: chat.phoneNo == chatRecordController.phoneNo.value ? Alignment.centerRight : Alignment.centerLeft,
     );
+  }
+
+  RelativeRect _getRelativeRect(GlobalKey key){
+  return RelativeRect.fromSize(
+      _getWidgetGlobalRect(key), const Size(200, 200));
+  }
+
+  Rect _getWidgetGlobalRect(GlobalKey key) {
+    final RenderBox renderBox =
+        key.currentContext!.findRenderObject() as RenderBox;
+    var offset = renderBox.localToGlobal(Offset.zero);
+    debugPrint('Widget position: ${offset.dx} ${offset.dy}');
+    return Rect.fromLTWH(offset.dx / 3.1, offset.dy * 1.05,
+        renderBox.size.width, renderBox.size.height);
   }
 }

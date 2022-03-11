@@ -4,6 +4,7 @@ import 'package:chat_apps_gochat/services/chat_remote_services.dart';
 import 'package:chat_apps_gochat/services/user_remote_service.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -15,6 +16,7 @@ class ChatRecordController extends GetxController{
   var isLoading = true.obs;
   var statusMsj = "Loading".obs;
   var phoneNo = "".obs;
+  var text = ''.obs;
 
   late String email;
   late String chatRoomId;
@@ -84,5 +86,15 @@ class ChatRecordController extends GetxController{
     messageController.text.isEmpty
       ? isTyping.value = false
       : isTyping.value = true;
+  }
+
+  copyText(String text) {
+    Clipboard.setData(ClipboardData(text: text));
+  }
+
+  pasteText() async {
+    ClipboardData? clipborad = await Clipboard.getData('text/plain');
+    text.value = clipborad!.text!;
+    messageController.text = text.value;
   }
 }

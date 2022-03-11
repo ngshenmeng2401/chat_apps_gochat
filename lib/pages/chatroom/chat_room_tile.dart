@@ -29,13 +29,13 @@ class ChatRoomTile extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 2,
-                  child: Container(
-                    color: Colors.grey[100],
-                    padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
                     child: chatroom.imgStatus == "noimage"
                       ? Image.asset("assets/images/p1.png",
-                          fit: BoxFit.fitWidth,)
-                      : Image.network("https://javathree99.com/s271059/gochat/images/user_profile/${chatroom.phoneNo}.png")
+                          fit: BoxFit.contain,)
+                      : Image.network("https://javathree99.com/s271059/gochat/images/user_profile/${chatroom.phoneNo}.png",
+                          fit: BoxFit.contain,)
                   )
                 ),
                 Expanded(
