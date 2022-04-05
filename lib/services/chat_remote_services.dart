@@ -52,7 +52,7 @@ class ChatRemoteServices{
           return null;
         } else {
           var jsonString = response.body;
-          print("IN remoteservices" + jsonString);
+          // print("IN remoteservices" + jsonString);
           return chatroomFromJson(jsonString);
         }
       } else {
@@ -77,7 +77,7 @@ class ChatRemoteServices{
           return null;
         } else {
           var jsonString = response.body;
-          print("IN remoteservices" + jsonString);
+          // print("IN remoteservices" + jsonString);
           return chatFromJson(jsonString);
         }
       } else {
@@ -87,13 +87,14 @@ class ChatRemoteServices{
       }
   }
 
-  static Future<List<Chat>?> fetchChat2(String chatroomId) async {
+  static Future<List<Chat>?> fetchChat2(String email, String chatroomId) async {
 
     var response =
       await client.post(
         Uri.parse(
           "https://javathree99.com/s271059/gochat/php/load_chat2.php"),
       body: {
+        "email":email,
         "chatroomId":chatroomId,
       });
       if (response.statusCode == 200) {
@@ -101,7 +102,7 @@ class ChatRemoteServices{
           return null;
         } else {
           var jsonString = response.body;
-          print("IN remoteservices" + jsonString);
+          // print("IN remoteservices" + jsonString);
           return chatFromJson(jsonString);
         }
       } else {

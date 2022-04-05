@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:chat_apps_gochat/model/chatroom_model.dart';
 import 'package:chat_apps_gochat/pages/chatroom/chats_controller.dart';
 import 'package:flutter/material.dart';
@@ -29,13 +30,26 @@ class ChatRoomTile extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 2,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: chatroom.imgStatus == "noimage"
-                      ? Image.asset("assets/images/p1.png",
-                          fit: BoxFit.contain,)
-                      : Image.network("https://javathree99.com/s271059/gochat/images/user_profile/${chatroom.phoneNo}.png",
-                          fit: BoxFit.contain,)
+                  child: Badge(
+                    showBadge: chatroom.unreadMessages == "0" ? false : true,
+                    badgeColor: Colors.red[400]!,
+                    badgeContent: Text(chatroom.unreadMessages!,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18
+                      ),),
+                    position: BadgePosition.topEnd(
+                      top: -10,
+                      end: 10,
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: chatroom.imgStatus == "noimage"
+                        ? Image.asset("assets/images/p1.png",
+                            fit: BoxFit.contain,)
+                        : Image.network("https://javathree99.com/s271059/gochat/images/user_profile/${chatroom.phoneNo}.png",
+                            fit: BoxFit.contain,)
+                    ),
                   )
                 ),
                 Expanded(

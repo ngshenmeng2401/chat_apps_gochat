@@ -69,6 +69,7 @@ class ChatsController extends GetxController{
   void navigateChatRecordView(Chatroom chatroom){
 
     appData.write("chatRoomId", chatroom.chatRoomId);
+    appData.write("receiverEmail", chatroom.receiverEmail);
 
     Get.to(() => ChatRecordView(chatroom));
   }

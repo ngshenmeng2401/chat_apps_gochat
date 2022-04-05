@@ -22,6 +22,7 @@ class ChatRecordController extends GetxController{
 
   late String email;
   late String chatRoomId;
+  late String receiverEmail;
   late Timer? timer;
 
   late FocusNode focusNode;
@@ -54,8 +55,9 @@ class ChatRecordController extends GetxController{
 
     chatRoomId = appData.read("chatRoomId")??'';
     // email = appData.read("keepLogin")??'';
+    receiverEmail = appData.read("receiverEmail")??'';
 
-    var chat = await ChatRemoteServices.fetchChat2(chatRoomId);
+    var chat = await ChatRemoteServices.fetchChat2(receiverEmail, chatRoomId);
     if (chat != null) {
       chatList.clear();
       chatList.assignAll(chat);

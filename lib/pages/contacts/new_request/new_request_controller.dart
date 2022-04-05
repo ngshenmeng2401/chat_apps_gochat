@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:chat_apps_gochat/model/friend_request_model.dart';
 import 'package:chat_apps_gochat/pages/contacts/new_request/request_user_details.dart';
 import 'package:chat_apps_gochat/services/request_remote_services.dart';
@@ -11,13 +13,21 @@ class NewRequestController extends GetxController{
 
   var requestList = <FriendRequest>[].obs;
   late String email;
+  late Timer? timer;
   var isLoading = true.obs;
   var statusMsj = "Loading".obs;
 
   @override
   void onInit() {
-    loadFriendRequest();
+    // loadFriendRequest();
+    timer = Timer.periodic(const Duration(seconds: 2), (Timer t) => loadFriendRequest());
     super.onInit();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   void loadFriendRequest() async{
