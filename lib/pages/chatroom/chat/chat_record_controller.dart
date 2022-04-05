@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:chat_apps_gochat/model/chat_model.dart';
 import 'package:chat_apps_gochat/model/user_model.dart';
 import 'package:chat_apps_gochat/services/chat_remote_services.dart';
@@ -20,6 +22,7 @@ class ChatRecordController extends GetxController{
 
   late String email;
   late String chatRoomId;
+  late Timer? timer;
 
   late FocusNode focusNode;
 
@@ -30,8 +33,8 @@ class ChatRecordController extends GetxController{
   void onInit() {
     focusNode = FocusNode();
     messageController = TextEditingController();
-    loadChatList();
     loadUser();
+    timer = Timer.periodic(const Duration(seconds: 2), (Timer t) => loadChatList());
     super.onInit();
   }
 
@@ -39,6 +42,12 @@ class ChatRecordController extends GetxController{
   void onClose() {
     focusNode.dispose();
     super.onClose();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   void loadChatList() async{

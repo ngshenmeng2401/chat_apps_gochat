@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:chat_apps_gochat/model/chatroom_model.dart';
 import 'package:chat_apps_gochat/pages/chatroom/chat/chat_record_view.dart';
 import 'package:chat_apps_gochat/services/chat_remote_services.dart';
@@ -16,6 +18,7 @@ class ChatsController extends GetxController{
   var chatroomList = <Chatroom>[].obs;
   
   late String email;
+  late Timer? timer;
   var isLoading = true.obs;
   var statusMsj = "Loading".obs;
 
@@ -27,7 +30,8 @@ class ChatsController extends GetxController{
         showEmoji.value = false;
       }
     });
-    loadChatroomList();
+    // loadChatroomList();
+    timer = Timer.periodic(const Duration(seconds: 2), (Timer t) => loadChatroomList());
     super.onInit();
   }
 
@@ -37,7 +41,13 @@ class ChatsController extends GetxController{
     super.onClose();
   }
 
-   void loadChatroomList() async{
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  void loadChatroomList() async{
 
     email = appData.read("keepLogin")??'';
 
