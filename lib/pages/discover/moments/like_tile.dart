@@ -32,7 +32,7 @@ class LikeTile extends StatelessWidget {
               Image.asset("assets/images/p1.png",
                 height: screenHeight/20,
                 fit: BoxFit.contain,)
-              : Image.network("https://javathree99.com/s271059/gochat/images/user_profile/${like.phoneNo}.png",
+              : Image.network("https://hubbuddies.com/271059/gochat/images/user_profile/${like.phoneNo}.png",
                 height: screenHeight/20,),
             ),
             const SizedBox(width: 20),
