@@ -14,7 +14,7 @@ class RequestRemoteServices{
     var response =
       await client.post(
         Uri.parse(
-          "https://javathree99.com/s271059/gochat/php/load_friend_request.php"),
+          "https://hubbuddies.com/271059/gochat/php/load_friend_request.php"),
       body: {
         "friendEmail":friendEmail,
       });
@@ -41,7 +41,7 @@ class RequestRemoteServices{
 
     var response = await client.post(
 
-      Uri.parse('https://javathree99.com/s271059/gochat/php/add_friend_request.php'), 
+      Uri.parse('https://hubbuddies.com/271059/gochat/php/add_friend_request.php'), 
       body: {
       "email" : email,
       "friendEmail" : friendEmail,
@@ -69,7 +69,7 @@ class RequestRemoteServices{
 
     var response = await client.post(
 
-      Uri.parse('https://javathree99.com/s271059/gochat/php/accept_request.php'), 
+      Uri.parse('https://hubbuddies.com/271059/gochat/php/accept_request.php'), 
       body: {
       "email" : email,
       "friendEmail" : friendEmail,

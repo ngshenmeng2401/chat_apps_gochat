@@ -16,7 +16,7 @@ class MomentRemoteServices{
     var response =
       await client.post(
         Uri.parse(
-          "https://javathree99.com/s271059/gochat/php/load_moment.php"),
+          "https://hubbuddies.com/271059/gochat/php/load_moment.php"),
       body: {
         "email":email,
       });
@@ -40,7 +40,7 @@ class MomentRemoteServices{
     var response =
       await client.post(
         Uri.parse(
-          "https://javathree99.com/s271059/gochat/php/load_contact_moment.php"),
+          "https://hubbuddies.com/271059/gochat/php/load_contact_moment.php"),
       body: {
         "email":friendEmail,
       });
@@ -64,7 +64,7 @@ class MomentRemoteServices{
     var response =
       await client.post(
         Uri.parse(
-          "https://javathree99.com/s271059/gochat/php/load_comment.php"),
+          "https://hubbuddies.com/271059/gochat/php/load_comment.php"),
       body: {
         "email":email,
       });
@@ -88,7 +88,7 @@ class MomentRemoteServices{
     var response =
       await client.post(
         Uri.parse(
-          "https://javathree99.com/s271059/gochat/php/load_likes.php"),
+          "https://hubbuddies.com/271059/gochat/php/load_likes.php"),
       body: {
         "email":email,
       });
@@ -115,7 +115,7 @@ class MomentRemoteServices{
 
     var response = await client.post(
 
-      Uri.parse('https://javathree99.com/s271059/gochat/php/add_comment.php'), 
+      Uri.parse('https://hubbuddies.com/271059/gochat/php/add_comment.php'), 
       body: {
       "postId" : postId,
       "email" : email,
@@ -142,7 +142,7 @@ class MomentRemoteServices{
 
     var response = await client.post(
 
-      Uri.parse('https://javathree99.com/s271059/gochat/php/delete_comment.php'), 
+      Uri.parse('https://hubbuddies.com/271059/gochat/php/delete_comment.php'), 
       body: {
       "commentId" : commentId,
       "email" : email,
@@ -168,7 +168,7 @@ class MomentRemoteServices{
 
     var response = await client.post(
 
-      Uri.parse('https://javathree99.com/s271059/gochat/php/like_post.php'), 
+      Uri.parse('https://hubbuddies.com/271059/gochat/php/like_post.php'), 
       body: {
       "postId" : postId,
       "email" : email,
@@ -194,7 +194,7 @@ class MomentRemoteServices{
 
     var response = await client.post(
 
-      Uri.parse('https://javathree99.com/s271059/gochat/php/unlike_post.php'), 
+      Uri.parse('https://hubbuddies.com/271059/gochat/php/unlike_post.php'), 
       body: {
       "postId" : postId,
       "email" : email,

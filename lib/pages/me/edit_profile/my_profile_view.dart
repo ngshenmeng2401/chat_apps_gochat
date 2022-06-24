@@ -39,7 +39,7 @@ class MyProfileView extends StatelessWidget {
                       hasImage: true,
                       img: editProfileController.userDetails[index].imgStatus == "noimage"
                         ? "assets/images/p1.png"
-                        : "https://javathree99.com/s271059/gochat/images/user_profile/${editProfileController.userDetails[index].phoneNo!}.png",
+                        : "https://hubbuddies.com/271059/gochat/images/user_profile/${editProfileController.userDetails[index].phoneNo!}.png",
                       height: screenHeight/9,
                     );
                   },

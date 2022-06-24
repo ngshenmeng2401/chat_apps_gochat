@@ -14,7 +14,7 @@ class PostRemoteServices {
     var response =
       await client.post(
         Uri.parse(
-          "https://javathree99.com/s271059/gochat/php/load_post.php"),
+          "https://hubbuddies.com/271059/gochat/php/load_post.php"),
       body: {
         "email":email,
       });
@@ -37,7 +37,7 @@ class PostRemoteServices {
     
     var response = await client.post(
 
-      Uri.parse('https://javathree99.com/s271059/gochat/php/add_post.php'), 
+      Uri.parse('https://hubbuddies.com/271059/gochat/php/add_post.php'), 
       body: {
       "email" : email,
       "encoded_string" : encodedString,
@@ -67,7 +67,7 @@ class PostRemoteServices {
 
     var response = await client.post(
 
-      Uri.parse('https://javathree99.com/s271059/gochat/php/delete_post.php'), 
+      Uri.parse('https://hubbuddies.com/271059/gochat/php/delete_post.php'), 
       body: {
       "email" : email,
       "postId" : postId,

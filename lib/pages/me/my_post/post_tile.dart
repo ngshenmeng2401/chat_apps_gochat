@@ -65,7 +65,7 @@ class PostTile extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
                     child: myPostController.postList[index].imgStatus == "noimage"
                       ? null
-                      : Image.network("https://javathree99.com/s271059/gochat/images/post/${myPostController.postList[index].postId}.png",
+                      : Image.network("https://hubbuddies.com/271059/gochat/images/post/${myPostController.postList[index].postId}.png",
                       height: screenHeight/2,
                       width: screenWidth/1.3,
                       fit: BoxFit.fitWidth,),

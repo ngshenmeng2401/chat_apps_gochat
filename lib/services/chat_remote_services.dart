@@ -18,7 +18,7 @@ class ChatRemoteServices{
 
     var response = await client.post(
 
-      Uri.parse('https://javathree99.com/s271059/gochat/php/send_message.php'), 
+      Uri.parse('https://hubbuddies.com/271059/gochat/php/send_message.php'), 
       body: {
       "email" : email,
       "friendEmail" : friendEmail,
@@ -43,7 +43,7 @@ class ChatRemoteServices{
     var response =
       await client.post(
         Uri.parse(
-          "https://javathree99.com/s271059/gochat/php/load_chatroom.php"),
+          "https://hubbuddies.com/271059/gochat/php/load_chatroom.php"),
       body: {
         "email":email,
       });
@@ -67,7 +67,7 @@ class ChatRemoteServices{
     var response =
       await client.post(
         Uri.parse(
-          "https://javathree99.com/s271059/gochat/php/load_chat.php"),
+          "https://hubbuddies.com/271059/gochat/php/load_chat.php"),
       body: {
         "email":email,
         "friendEmail":friendEmail,
@@ -92,7 +92,7 @@ class ChatRemoteServices{
     var response =
       await client.post(
         Uri.parse(
-          "https://javathree99.com/s271059/gochat/php/load_chat2.php"),
+          "https://hubbuddies.com/271059/gochat/php/load_chat2.php"),
       body: {
         "email":email,
         "chatroomId":chatroomId,

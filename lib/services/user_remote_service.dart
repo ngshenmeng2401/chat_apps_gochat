@@ -15,7 +15,7 @@ class UserRemoteServices{
     
     var response = await client.post(
 
-      Uri.parse('https://javathree99.com/s271059/gochat/php/signup_user.php'), 
+      Uri.parse('https://hubbuddies.com/271059/gochat/php/signup_user.php'), 
       body: {
       "email" : email,
       "username" : username,
@@ -42,7 +42,7 @@ class UserRemoteServices{
 
     var response = await client.post(
 
-      Uri.parse('https://javathree99.com/s271059/gochat/php/login_user.php'), 
+      Uri.parse('https://hubbuddies.com/271059/gochat/php/login_user.php'), 
       body: {
       "email" : email,
       "password" : password,
@@ -90,7 +90,7 @@ class UserRemoteServices{
     var response =
       await client.post(
         Uri.parse(
-          "https://javathree99.com/s271059/gochat/php/load_user.php"),
+          "https://hubbuddies.com/271059/gochat/php/load_user.php"),
       body: {
         "email":email,
       });
@@ -124,7 +124,7 @@ class UserRemoteServices{
     
     var response = await client.post(
 
-      Uri.parse('https://javathree99.com/s271059/gochat/php/edit_user.php'), 
+      Uri.parse('https://hubbuddies.com/271059/gochat/php/edit_user.php'), 
       body: {
       "email" : email,
       "username" : username,
@@ -150,7 +150,7 @@ class UserRemoteServices{
 
     var response = await client.post(
 
-      Uri.parse('https://javathree99.com/s271059/gochat/php/edit_profile_pic.php'), 
+      Uri.parse('https://hubbuddies.com/271059/gochat/php/edit_profile_pic.php'), 
       body: {
       "email" : email,
       "image" : image,
@@ -179,7 +179,7 @@ class UserRemoteServices{
     var response =
       await client.post(
         Uri.parse(
-          "https://javathree99.com/s271059/gochat/php/search_user.php"),
+          "https://hubbuddies.com/271059/gochat/php/search_user.php"),
       body: {
         "email":email,
         "phoneNo":phoneNo,

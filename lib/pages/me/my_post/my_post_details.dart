@@ -50,7 +50,7 @@ class MyPostDetailsView extends StatelessWidget {
                         Container(
                           height: screenHeight,
                           width: screenWidth,
-                          child: Image.network("https://javathree99.com/s271059/gochat/images/post/${postModel.postId}.png",
+                          child: Image.network("https://hubbuddies.com/271059/gochat/images/post/${postModel.postId}.png",
                           fit: BoxFit.contain,),
                         ),
                         Align(

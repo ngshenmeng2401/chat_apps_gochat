@@ -33,7 +33,7 @@ class ProfileDetails extends StatelessWidget {
                 child: user.imgStatus == "noimage"
                   ? Image.asset("assets/images/p1.png",
                       fit: BoxFit.fitWidth,)
-                  : Image.network("https://javathree99.com/s271059/gochat/images/user_profile/${user.phoneNo}.png",
+                  : Image.network("https://hubbuddies.com/271059/gochat/images/user_profile/${user.phoneNo}.png",
                       fit: BoxFit.fitWidth,)
               )
             ),
