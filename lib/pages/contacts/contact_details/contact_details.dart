@@ -121,25 +121,25 @@ class ContactDetailsView extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 15,),
-            GestureDetector(
-              onTap: () {
-                contactDetailController.navigateChatRecordView(friend);
-              },
-              child: Container(
-                color: Colors.grey[100],
-                height: screenHeight/12,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(CupertinoIcons.conversation_bubble),
-                    SizedBox(width: 10),
-                    Text("Send message",
-                      style: TextStyle(fontSize: 20),),
-                  ],
-                ),
-              ),
-            )
+            // const SizedBox(height: 15,),
+            // GestureDetector(
+            //   onTap: () {
+            //     contactDetailController.navigateChatRecordView(friend);
+            //   },
+            //   child: Container(
+            //     color: Colors.grey[100],
+            //     height: screenHeight/12,
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: const [
+            //         Icon(CupertinoIcons.conversation_bubble),
+            //         SizedBox(width: 10),
+            //         Text("Send message",
+            //           style: TextStyle(fontSize: 20),),
+            //       ],
+            //     ),
+            //   ),
+            // )
           ],
         ),
       ),
