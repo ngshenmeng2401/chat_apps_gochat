@@ -13,7 +13,7 @@ class ContactMomentTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
-        child: Image.network("https://javathree99.com/s271059/gochat/images/post/${moment.postId}.png",
+        child: Image.network("https://hubbuddies.com/271059/gochat/images/post/${moment.postId}.png",
           fit: BoxFit.fill,),
       ),
     );

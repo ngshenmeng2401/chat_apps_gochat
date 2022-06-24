@@ -40,7 +40,7 @@ class MomentTile extends StatelessWidget {
                      moment.profileImg == "noimage"
                     ? Image.asset("assets/images/p1.png",
                       fit: BoxFit.fitWidth,)
-                    : Image.network("https://javathree99.com/s271059/gochat/images/user_profile/${moment.phoneNo}.png")
+                    : Image.network("https://hubbuddies.com/271059/gochat/images/user_profile/${moment.phoneNo}.png")
                   )
                   
                 )
@@ -90,7 +90,7 @@ class MomentTile extends StatelessWidget {
                     children: [
                       moment.momentImg == "noimage"
                       ? Container()
-                      : Image.network("https://javathree99.com/s271059/gochat/images/post/${moment.postId}.png",
+                      : Image.network("https://hubbuddies.com/271059/gochat/images/post/${moment.postId}.png",
                         ),
                     ],
                   ),

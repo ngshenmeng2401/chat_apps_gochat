@@ -34,7 +34,7 @@ class ContactsTile extends StatelessWidget {
                      child: friend.imgStatus == "noimage"
                       ? Image.asset("assets/images/p1.png",
                           fit: BoxFit.fitWidth,)
-                      : Image.network("https://javathree99.com/s271059/gochat/images/user_profile/${friend.phoneNo}.png")
+                      : Image.network("https://hubbuddies.com/271059/gochat/images/user_profile/${friend.phoneNo}.png")
                   )
                 ),
                 Expanded(

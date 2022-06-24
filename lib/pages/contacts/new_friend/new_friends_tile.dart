@@ -28,7 +28,7 @@ class NewFriendsTile extends StatelessWidget {
                   child: contacts.imgStatus == "noimage"
                     ? Image.asset("assets/images/p1.png",
                         fit: BoxFit.fitWidth,)
-                    : Image.network("https://javathree99.com/s271059/gochat/images/user_profile/${contacts.phoneNo}.png")
+                    : Image.network("https://hubbuddies.com/271059/gochat/images/user_profile/${contacts.phoneNo}.png")
                 ),
                 Expanded(
                   flex: 6,
