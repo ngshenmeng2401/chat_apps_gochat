@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 class ChatRecordTile extends StatelessWidget {
   
   final chatRecordController = Get.put(ChatRecordController());
-   final Chat chat;
+  final Chat chat;
   final int index;
   final widgetKey = GlobalKey();
   ChatRecordTile(this.index, this.chat, {Key? key}) : super(key: key);
