@@ -115,6 +115,7 @@ class NewFriendController extends GetxController{
     searchPhoneController.clear();
     isTyping.value = false;
     statusMsj("Search User".tr);
+    contactList.clear();
   }
 
   void sendFriendRequest(String friendEmail){
