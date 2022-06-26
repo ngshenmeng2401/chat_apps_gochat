@@ -19,8 +19,8 @@ class NewRequestController extends GetxController{
 
   @override
   void onInit() {
-    // loadFriendRequest();
-    timer = Timer.periodic(const Duration(seconds: 2), (Timer t) => loadFriendRequest());
+    loadFriendRequest();
+    // timer = Timer.periodic(const Duration(seconds: 2), (Timer t) => loadFriendRequest());
     super.onInit();
   }
 
@@ -59,7 +59,7 @@ class NewRequestController extends GetxController{
       onConfirm:() => {
         Get.back(),
         RequestRemoteServices.acceptRequest(email, friendEmail),
-        Future.delayed(const Duration(seconds: 2), () {
+        Future.delayed(const Duration(milliseconds: 1000), () {
           loadFriendRequest();
         }),
       },
