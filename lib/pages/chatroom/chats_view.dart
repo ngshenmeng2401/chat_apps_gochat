@@ -18,6 +18,13 @@ class ChatsView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("GoChat".tr),
+        actions: [
+          IconButton(
+            onPressed: (){
+              chatController.displayFriendList(screenHeight, screenWidth);
+            }, 
+            icon: const Icon(Icons.add_circle_outline))
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(

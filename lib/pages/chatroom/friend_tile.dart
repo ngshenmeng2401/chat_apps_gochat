@@ -1,11 +1,11 @@
 import 'package:chat_apps_gochat/model/friend_model.dart';
-import 'package:chat_apps_gochat/pages/chatroom/chat/chat_record_controller.dart';
+import 'package:chat_apps_gochat/pages/chatroom/chats_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class FriendTile extends StatelessWidget {
 
-  final chatRecordController = Get.put(ChatRecordController());
+  final chatsController = Get.put(ChatsController());
   final Friend friend;
   final int index;
   FriendTile(this.index, this.friend, {Key? key}) : super(key: key);
@@ -21,7 +21,8 @@ class FriendTile extends StatelessWidget {
       margin: const EdgeInsets.fromLTRB(0, 0, 0, 3),
       child: GestureDetector(
         onTap: (){
-          
+          chatsController.createChatroom(friend.friendEmail!);
+          Get.back();
         },
         child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,7 +37,7 @@ class FriendTile extends StatelessWidget {
                   Image.asset("assets/images/p1.png",
                     height: screenHeight/20,
                     fit: BoxFit.contain,)
-                  : Image.network("https://hubbuddies.com/s271059/gochat/images/user_profile/${friend.phoneNo}.png",
+                  : Image.network("https://hubbuddies.com/271059/gochat/images/user_profile/${friend.phoneNo}.png",
                     height: screenHeight/20,),
                 ),
               ),

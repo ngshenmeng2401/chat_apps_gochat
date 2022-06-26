@@ -1,5 +1,6 @@
 import 'package:chat_apps_gochat/model/chat_model.dart';
 import 'package:chat_apps_gochat/model/chatroom_model.dart';
+import 'package:chat_apps_gochat/model/friend_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -9,6 +10,38 @@ class ChatRemoteServices{
 
   static final appData = GetStorage();
   static var client = http.Client();
+
+  static Future<List<Chatroom>?> createChatroom(String email, String friendEmail) async {
+    
+    print(email);
+    print(friendEmail);
+
+    var response = await client.post(
+
+      Uri.parse('https://hubbuddies.com/271059/gochat/php/create_chatroom.php'), 
+      body: {
+      "email" : email,
+      "friendEmail" : friendEmail,
+    });
+    // print(response.body);
+    if (response.body == "success") {
+      
+      getSnackBar("Create chatroom", "");
+
+      return null;
+    }else if (response.body == "failed") {
+      
+      getSnackBar("Create Failed", "");
+
+      return null;
+    }else {
+
+      var resp = response.body;
+
+      // getSnackBar("Chatroom already created", "");
+      return chatroomFromJson(resp);
+    }
+  }
 
   static Future<String?> sendMessage(String email, String friendEmail , String messageText) async {
     
@@ -104,6 +137,30 @@ class ChatRemoteServices{
           var jsonString = response.body;
           // print("IN remoteservices" + jsonString);
           return chatFromJson(jsonString);
+        }
+      } else {
+        //show error message
+        // return null;
+        throw Exception('Failed to load Categories from API');
+      }
+  }
+
+  static Future<List<Friend>?> fetchFriend(String email) async {
+
+    var response =
+      await client.post(
+        Uri.parse(
+          "https://hubbuddies.com/271059/gochat/php/load_chatlist_friend.php"),
+      body: {
+        "email":email,
+      });
+      if (response.statusCode == 200) {
+        if (response.body == "nodata") {
+          return null;
+        } else {
+          var jsonString = response.body;
+          // print("IN remoteservices" + jsonString);
+          return friendFromJson(jsonString);
         }
       } else {
         //show error message

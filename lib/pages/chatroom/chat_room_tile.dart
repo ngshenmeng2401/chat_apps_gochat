@@ -47,7 +47,7 @@ class ChatRoomTile extends StatelessWidget {
                       child: chatroom.imgStatus == "noimage"
                         ? Image.asset("assets/images/p1.png",
                             fit: BoxFit.contain,)
-                        : Image.network("https://javathree99.com/s271059/gochat/images/user_profile/${chatroom.phoneNo}.png",
+                        : Image.network("https://hubbuddies.com/271059/gochat/images/user_profile/${chatroom.phoneNo}.png",
                             fit: BoxFit.contain,)
                     ),
                   )
@@ -80,7 +80,7 @@ class ChatRoomTile extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
+                    children: const [
                       // Text("${chatController.chatRoomModel[index].time}"),
                       // Icon(chatController.chatRoomModel[index].mute == true 
                       //   ? Icons.volume_mute
