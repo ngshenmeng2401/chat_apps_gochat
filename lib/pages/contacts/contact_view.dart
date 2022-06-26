@@ -66,7 +66,7 @@ class ContactsView extends StatelessWidget {
               },
             ),
             Badge(
-              showBadge: contactsController.requestList.length > 0 ? true : false,
+              showBadge: contactsController.requestList.isNotEmpty ? true : false,
               badgeColor: Colors.blue[300]!,
               badgeContent: Text(contactsController.requestList.length.toString(),
                 style: const TextStyle(
