@@ -11,30 +11,30 @@ class BottomNavigationBarController extends GetxController {
     tabIndex = index;
     update();
 
-    // if(tabIndex == 0){
+    if(tabIndex == 0){
 
-    //   Get.delete<ContactsController>();
-    //   Get.delete<DiscoverController>();
-    //   Get.delete<ProfileController>();
+      Get.delete<ContactsController>();
+      Get.delete<DiscoverController>();
+      Get.delete<ProfileController>();
 
-    // }else if(tabIndex == 1){
+    }else if(tabIndex == 1){
 
-    //   Get.delete<ChatsController>();
-    //   Get.delete<DiscoverController>();
-    //   Get.delete<ProfileController>();
+      Get.delete<ChatsController>();
+      Get.delete<DiscoverController>();
+      Get.delete<ProfileController>();
 
-    // }else if(tabIndex == 2){
+    }else if(tabIndex == 2){
 
-    //   Get.delete<ChatsController>();
-    //   Get.delete<ContactsController>();
-    //   Get.delete<ProfileController>();
+      Get.delete<ChatsController>();
+      Get.delete<ContactsController>();
+      Get.delete<ProfileController>();
 
-    // }else if(tabIndex == 3){
+    }else if(tabIndex == 3){
 
-    //   Get.delete<ChatsController>();
-    //   Get.delete<ContactsController>();
-    //   Get.delete<DiscoverController>();
+      Get.delete<ChatsController>();
+      Get.delete<ContactsController>();
+      Get.delete<DiscoverController>();
 
-    // }
+    }
   }
 }
